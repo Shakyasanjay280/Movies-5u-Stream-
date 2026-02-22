@@ -1,0 +1,2096 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Movies 5U - Premium Streaming</title>
+    <meta name="theme-color" content="#e50914">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800;900&display=swap');
+
+        :root {
+            --primary: #e50914; --accent: #00d4ff;
+            --bg: #0a0e27; --card-bg: #111827;
+            --text: #fff; --nav-bg: rgba(10,10,10,0.97);
+            --border: rgba(255,255,255,0.08);
+            --glow: rgba(229,9,20,0.3);
+        }
+        .light-mode { --bg:#f0f2f5; --card-bg:#fff; --text:#111; --nav-bg:rgba(255,255,255,0.97); --border:rgba(0,0,0,0.08); }
+        .night-owl { filter: brightness(0.85) sepia(0.2); }
+        .festival-diwali { --bg:#1a0a00; --primary:#ff8c00; --accent:#ffd700; }
+        .festival-holi { --primary:#ff1493; --accent:#00ff88; }
+        .festival-christmas { --bg:#001a00; --primary:#00cc44; --accent:#ff0000; }
+        .festival-eid { --bg:#001a1a; --primary:#00d4ff; --accent:#ffd700; }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background:var(--bg); color:var(--text); font-family:'Urbanist',sans-serif; overflow-x:hidden; padding-bottom:110px; transition:background 0.5s,color 0.3s; }
+
+        /* ===== PARTICLE BG ===== */
+        #particles { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+        .particle { position:absolute; width:2px; height:2px; background:rgba(255,255,255,0.4); border-radius:50%; animation:float-particle linear infinite; }
+        @keyframes float-particle { 0%{transform:translateY(100vh) translateX(0);opacity:0;} 10%{opacity:1;} 90%{opacity:0.5;} 100%{transform:translateY(-100px) translateX(50px);opacity:0;} }
+
+        /* ===== SPLASH ===== */
+        #splash { position:fixed;inset:0;background:radial-gradient(ellipse at center, #1a1a3e 0%, #0a0e27 50%, #000 100%);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px; }
+        .splash-logo-wrap { position:relative; }
+        .splash-logo-ring { position:absolute; inset:-20px; border-radius:50%; border:2px solid rgba(229,9,20,0.3); animation:ring-expand 2s ease-in-out infinite; }
+        .splash-logo-ring2 { animation-delay:0.5s; position:absolute; inset:-35px; border-radius:50%; border:1px solid rgba(0,212,255,0.2); animation:ring-expand 2s ease-in-out infinite; }
+        @keyframes ring-expand { 0%{transform:scale(0.8);opacity:0;} 50%{opacity:1;} 100%{transform:scale(1.2);opacity:0;} }
+        .logo-anim { font-size:52px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:4px;background:linear-gradient(135deg,#fff 0%,var(--primary) 50%,#ff6b6b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:logo-glow 2s ease-in-out infinite; }
+        @keyframes logo-glow { 0%,100%{filter:drop-shadow(0 0 10px rgba(229,9,20,0.5));} 50%{filter:drop-shadow(0 0 25px rgba(229,9,20,0.9));} }
+        .splash-tagline { font-size:11px;color:#888;text-transform:uppercase;letter-spacing:3px;font-weight:700; }
+        .splash-bar-wrap { width:200px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden; }
+        .splash-bar { height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:2px;animation:loadbar 2.5s ease-in-out forwards; }
+        @keyframes loadbar { 0%{width:0%;} 60%{width:80%;} 90%{width:95%;} 100%{width:100%;} }
+        .splash-dots { display:flex;gap:6px; }
+        .splash-dot-anim { width:8px;height:8px;background:var(--primary);border-radius:50%;animation:bounce-dot 1.4s ease-in-out infinite; }
+        .splash-dot-anim:nth-child(2) { animation-delay:0.2s; background:var(--accent); }
+        .splash-dot-anim:nth-child(3) { animation-delay:0.4s; }
+        @keyframes bounce-dot { 0%,100%{transform:translateY(0);opacity:0.5;} 50%{transform:translateY(-8px);opacity:1;} }
+
+        /* ===== HEADER ===== */
+        #mainHeader { position:fixed;top:0;width:100%;z-index:40;background:linear-gradient(to bottom,rgba(10,14,39,0.98),transparent);backdrop-filter:blur(12px);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border); }
+        .header-logo { font-size:22px;font-weight:900;text-transform:uppercase;font-style:italic;letter-spacing:2px;cursor:pointer;background:linear-gradient(135deg,#fff 0%,var(--primary) 60%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:logo-shimmer 4s ease-in-out infinite;background-size:200% 200%; }
+        @keyframes logo-shimmer { 0%{background-position:0% 50%;} 50%{background-position:100% 50%;} 100%{background-position:0% 50%;} }
+        .header-icons { display:flex;gap:6px;align-items:center; }
+        .header-icon { width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s;color:#ccc;position:relative;border-radius:50%; }
+        .header-icon:hover { color:var(--primary);background:rgba(229,9,20,0.1); }
+        .notif-dot { position:absolute;top:6px;right:6px;width:9px;height:9px;background:#ff4444;border-radius:50%;border:2px solid var(--bg);animation:pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0%,100%{box-shadow:0 0 5px #ff4444;} 50%{box-shadow:0 0 15px #ff4444;} }
+        .ghost-banner { background:rgba(255,255,255,0.05);border:1px dashed rgba(255,255,255,0.2);border-radius:8px;padding:4px 12px;font-size:10px;font-weight:800;color:#888;display:none;align-items:center;gap:6px; }
+        .ghost-banner.show { display:flex; }
+
+        /* ===== NEWS TICKER ===== */
+        #newsTicker { background:linear-gradient(90deg,var(--primary),#ff6b6b);padding:8px 0;overflow:hidden;margin-top:60px;position:relative;z-index:30; }
+        .ticker-content { display:flex;gap:60px;white-space:nowrap;animation:ticker 30s linear infinite; }
+        @keyframes ticker { 0%{transform:translateX(100vw);} 100%{transform:translateX(-100%);} }
+        .ticker-item { font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:white; }
+
+        /* ===== SKELETON LOADING ===== */
+        .skeleton { background:linear-gradient(90deg,var(--card-bg) 25%,rgba(255,255,255,0.05) 50%,var(--card-bg) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite; }
+        @keyframes shimmer { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+        .skeleton-card { border-radius:14px;overflow:hidden;border:1px solid var(--border); }
+        .skeleton-poster { aspect-ratio:2/3;width:100%;border-radius:10px; }
+        .skeleton-title { height:10px;border-radius:5px;margin:8px;width:80%; }
+        .skeleton-meta { height:8px;border-radius:4px;margin:4px 8px;width:60%; }
+
+        /* ===== MAIN GRID ===== */
+        #mainGrid,#searchGrid,#historyGrid,#forYouGrid,#diaryGrid { display:grid;gap:12px;grid-template-columns:repeat(3,1fr);padding:12px; }
+
+        /* ===== MOVIE CARD ===== */
+        .movie-card { border-radius:14px;overflow:hidden;position:relative;background:var(--card-bg);border:1px solid var(--border);transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3); }
+        .movie-card:hover { transform:translateY(-8px);border-color:var(--primary);box-shadow:0 15px 40px var(--glow); }
+        .movie-card:active { transform:scale(0.93); }
+        .poster-box { position:relative;width:100%;overflow:hidden;background:#0a0e27;aspect-ratio:2/3; }
+        .poster-box img { width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform 0.4s;image-rendering:auto; }
+        .movie-card:hover .poster-box img { transform:scale(1.08); }
+        .badge-container { position:absolute;top:6px;left:6px;right:6px;display:flex;gap:3px;flex-wrap:wrap;z-index:10; }
+        .q-badge { background:linear-gradient(135deg,var(--primary),#ff6b6b);color:#fff;font-size:6px;padding:3px 6px;border-radius:3px;font-weight:900;text-transform:uppercase; }
+        .vip-badge { background:linear-gradient(135deg,#ffd700,#ff8c00);color:#000;padding:3px 6px;border-radius:3px;font-size:6px;font-weight:900; }
+        .new-badge { background:linear-gradient(135deg,#00ff88,#00cc66);color:#000;padding:3px 6px;border-radius:3px;font-size:6px;font-weight:900;animation:badge-pulse 2s infinite; }
+        @keyframes badge-pulse { 0%,100%{box-shadow:0 0 5px rgba(0,255,136,0.4);} 50%{box-shadow:0 0 12px rgba(0,255,136,0.7);} }
+        .heart-btn { position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.75);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:20;cursor:pointer;border:1px solid rgba(255,255,255,0.2);transition:all 0.3s;color:#fff;font-size:14px;backdrop-filter:blur(5px); }
+        .heart-btn.active { background:var(--primary);box-shadow:0 0 15px rgba(229,9,20,0.6); }
+        .progress-bar { position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent));z-index:15; }
+        .movie-info { padding:10px; }
+        .movie-title { font-size:9px;font-weight:900;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px; }
+        .movie-meta { display:flex;justify-content:space-between;font-size:8px;margin-bottom:4px; }
+        .movie-year { color:var(--primary);font-weight:800; }
+        .movie-rating { color:#ffc107;font-weight:800; }
+        .audio-languages { display:flex;flex-wrap:wrap;gap:3px;padding-top:4px;border-top:1px solid var(--border); }
+        .audio-tag { background:rgba(229,9,20,0.15);border:1px solid rgba(229,9,20,0.3);color:#fff;font-size:5px;padding:2px 5px;border-radius:3px;font-weight:800;text-transform:uppercase; }
+        .audio-tag.primary { background:var(--primary);border-color:var(--primary); }
+
+        /* LONG PRESS MENU */
+        .ctx-menu { position:fixed;background:rgba(17,24,39,0.97);border:1px solid var(--border);border-radius:16px;padding:8px;z-index:9000;min-width:180px;backdrop-filter:blur(15px);box-shadow:0 20px 60px rgba(0,0,0,0.8);display:none;animation:scaleIn 0.2s ease; }
+        @keyframes scaleIn { from{transform:scale(0.8);opacity:0;} to{transform:scale(1);opacity:1;} }
+        .ctx-item { padding:12px 16px;font-size:12px;font-weight:800;cursor:pointer;border-radius:10px;display:flex;align-items:center;gap:10px;transition:all 0.2s; }
+        .ctx-item:hover { background:rgba(229,9,20,0.2); }
+
+        /* ===== CATEGORIES ===== */
+        .categories-grid { display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:0 16px; }
+        .category-btn { background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden; }
+        .category-btn::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--primary),var(--accent));transform:scaleX(0);transition:transform 0.3s; }
+        .category-btn:hover::before,.category-btn.active::before { transform:scaleX(1); }
+        .category-btn.active { background:rgba(229,9,20,0.12);border-color:var(--primary);box-shadow:0 0 15px rgba(229,9,20,0.15); }
+        .cat-icon { width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;color:white;transition:transform 0.3s; }
+        .category-btn:hover .cat-icon { transform:scale(1.2); }
+        .cat-label { font-size:7px;font-weight:900;text-transform:uppercase;text-align:center;color:var(--text); }
+        .icon-all{background:linear-gradient(135deg,#667eea,#764ba2);} .icon-bollywood{background:linear-gradient(135deg,#f093fb,#f5576c);} .icon-hollywood{background:linear-gradient(135deg,#4facfe,#00f2fe);} .icon-south{background:linear-gradient(135deg,#43e97b,#38f9d7);} .icon-action{background:linear-gradient(135deg,#fa709a,#fee140);} .icon-comedy{background:linear-gradient(135deg,#a8edea,#fed6e3);} .icon-horror{background:linear-gradient(135deg,#ff0844,#ffb199);} .icon-scifi{background:linear-gradient(135deg,#30cfd0,#330867);} .icon-webseries{background:linear-gradient(135deg,#5ee7df,#b490ca);} .icon-18plus{background:linear-gradient(135deg,#eb3349,#f45c43);} .icon-netflix{background:linear-gradient(135deg,#e50914,#b20710);} .icon-prime{background:linear-gradient(135deg,#00a8e1,#0077b6);} .icon-hotstar{background:linear-gradient(135deg,#1f80e0,#0d5cb6);} .icon-jio{background:linear-gradient(135deg,#e60000,#b30000);} .icon-sony{background:linear-gradient(135deg,#f5c518,#e6a700);} .icon-zee5{background:linear-gradient(135deg,#823c96,#5a287d);}
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav { position:fixed;bottom:0;width:100%;background:var(--nav-bg);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0 18px;z-index:5000; }
+        .nav-item { color:#555;font-size:9px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:all 0.3s;position:relative;padding:4px 8px; }
+        .nav-item.active { color:var(--primary);transform:scale(1.1); }
+        .nav-item.active::after { content:'';position:absolute;bottom:-6px;width:4px;height:3px;background:var(--primary);border-radius:2px; }
+        .nav-badge { position:absolute;top:-2px;right:0;background:var(--primary);color:#fff;font-size:7px;font-weight:900;min-width:15px;height:15px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px; }
+
+        /* ===== HERO ===== */
+        #heroBox { height:56vh;position:relative;overflow:hidden;background:#000;min-height:280px; }
+        .hero-slide { position:absolute;inset:0;transition:opacity 0.8s ease;opacity:0; }
+        .hero-slide.active { opacity:1; }
+        .hero-slide img { width:100%;height:100%;object-fit:cover;object-position:center top; }
+        .hero-overlay { position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,39,0.2) 0%,transparent 35%,rgba(10,14,39,0.97) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:30px 20px; }
+        .hero-title { font-size:26px;font-weight:900;color:#fff;text-transform:uppercase;margin-bottom:4px;line-height:1.2;text-shadow:2px 2px 10px rgba(0,0,0,0.9); }
+        .hero-meta { font-size:11px;color:#aaa;font-weight:600;margin-bottom:12px; }
+        .hero-actions { display:flex;gap:10px; }
+        .hero-btn { background:linear-gradient(135deg,var(--primary),#ff6b6b);color:white;padding:10px 24px;border-radius:8px;font-weight:900;text-transform:uppercase;font-size:10px;border:none;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px var(--glow); }
+        .hero-btn-2 { background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);color:white;padding:10px 18px;border-radius:8px;font-weight:900;text-transform:uppercase;font-size:10px;border:1px solid rgba(255,255,255,0.3);cursor:pointer;transition:all 0.3s; }
+        .hero-dots { display:flex;gap:6px;margin-top:10px; }
+        .hero-dot { width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,0.3);transition:all 0.3s;cursor:pointer; }
+        .hero-dot.active { width:20px;background:var(--primary); }
+
+        /* ===== UPDATE POPUP ===== */
+        #appUpdatePopup { position:fixed;top:70px;left:12px;right:12px;background:linear-gradient(135deg,#0f3460,#1a1a2e);border:1px solid rgba(0,212,255,0.5);border-radius:16px;padding:14px 16px;z-index:3500;display:none;align-items:center;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,0.7),0 0 20px rgba(0,212,255,0.15);animation:slideDown 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+        #appUpdatePopup.show { display:flex; }
+        @keyframes slideDown { from{transform:translateY(-20px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+        .update-icon-anim { font-size:28px;animation:update-bounce 1s ease-in-out infinite; }
+        @keyframes update-bounce { 0%,100%{transform:scale(1);} 50%{transform:scale(1.2) rotate(10deg);} }
+        .update-badge-dot { position:absolute;top:-2px;right:-2px;width:10px;height:10px;background:#00d4ff;border-radius:50%;animation:pulse-dot 2s infinite;border:2px solid var(--bg); }
+
+        /* ===== BANNERS ===== */
+        .banner-premium { background:linear-gradient(135deg,#1a1a2e,#0f3460);border:1px solid rgba(0,212,255,0.25);border-radius:14px;padding:16px;margin:12px 16px;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden; }
+        .banner-premium::before { content:'';position:absolute;top:-50%;right:-20%;width:150px;height:150px;background:radial-gradient(circle,rgba(0,212,255,0.12),transparent 70%);border-radius:50%;animation:float 6s ease-in-out infinite; }
+        @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
+        .banner-icon { font-size:36px;z-index:2;flex-shrink:0; }
+        .banner-content { flex:1;z-index:2; }
+        .banner-title { font-size:14px;font-weight:900;text-transform:uppercase;margin-bottom:2px; }
+        .banner-desc { font-size:10px;color:#aaa;font-weight:600; }
+        .banner-btn { background:linear-gradient(135deg,var(--accent),#00a8cc);color:#000;padding:8px 16px;border-radius:8px;font-weight:900;text-transform:uppercase;font-size:10px;border:none;cursor:pointer;z-index:2;flex-shrink:0;transition:all 0.3s; }
+
+        /* ===== CAROUSEL ===== */
+        .carousel-section { padding:0 16px;margin-bottom:20px; }
+        .carousel-label { font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px; }
+        .see-all { font-size:10px;color:var(--primary);font-weight:800;cursor:pointer; }
+        .carousel-scroll { display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory; }
+        .carousel-scroll::-webkit-scrollbar { height:3px; }
+        .carousel-scroll::-webkit-scrollbar-thumb { background:rgba(229,9,20,0.5);border-radius:2px; }
+        .carousel-item { flex-shrink:0;cursor:pointer;transition:all 0.3s;scroll-snap-align:start; }
+        .carousel-item:hover { transform:scale(1.05); }
+        .carousel-item img { border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.4);object-fit:cover;object-position:center top; }
+        .carousel-title { font-size:9px;font-weight:800;margin-top:6px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title { font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;margin:0 0 12px;display:flex;align-items:center;gap:8px;color:var(--text); }
+        .section-title::before { content:'';width:3px;height:18px;background:linear-gradient(180deg,var(--primary),var(--accent));border-radius:2px;flex-shrink:0; }
+
+        /* ===== MOOD SCROLL ===== */
+        .mood-scroll { display:flex;gap:8px;overflow-x:auto;padding:0 16px 6px; }
+        .mood-btn { flex-shrink:0;background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:8px 16px;font-size:11px;font-weight:800;cursor:pointer;transition:all 0.3s;color:var(--text);white-space:nowrap; }
+        .mood-btn.active { background:var(--primary);border-color:var(--primary);color:white; }
+        .filter-tabs { display:flex;gap:6px;overflow-x:auto;padding:0 16px 6px; }
+        .filter-tab { flex-shrink:0;padding:7px 14px;border-radius:20px;font-size:10px;font-weight:800;cursor:pointer;border:1px solid var(--border);background:var(--card-bg);color:var(--text);transition:all 0.3s;white-space:nowrap; }
+        .filter-tab.active { background:var(--primary);border-color:var(--primary);color:white; }
+
+        /* ===== PAGE VIEWS ===== */
+        .page-view { position:fixed;inset:0;background:var(--bg);z-index:4000;display:none;overflow-y:auto;overflow-x:hidden; }
+        .page-view.active { display:block; }
+
+        /* ===== MODALS ===== */
+        .modal { position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px); }
+        .modal.active { display:flex; }
+        .modal-content { background:var(--card-bg);border:1px solid var(--border);border-radius:22px;padding:22px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;box-shadow:0 25px 80px rgba(0,0,0,0.7); }
+        .modal-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:18px; }
+        .modal-title { font-size:16px;font-weight:900;text-transform:uppercase; }
+        .modal-close { width:32px;height:32px;background:rgba(255,255,255,0.08);border:none;color:#888;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all 0.3s; }
+        .modal-close:hover { background:rgba(229,9,20,0.3);color:white; }
+
+        /* ===== SEARCH ===== */
+        .search-bar { width:100%;padding:12px 16px;border-radius:22px;border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--text);font-size:13px;font-weight:600;outline:none;transition:all 0.3s;font-family:'Urbanist',sans-serif; }
+        .search-bar:focus { border-color:var(--primary);background:rgba(229,9,20,0.05);box-shadow:0 0 20px rgba(229,9,20,0.15); }
+        #searchSuggestions { position:absolute;top:100%;left:0;right:0;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;margin-top:6px;z-index:1000;max-height:200px;overflow-y:auto;display:none;box-shadow:0 15px 40px rgba(0,0,0,0.5); }
+        .suggestion-item { padding:12px 16px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s; }
+        .suggestion-item:hover { background:rgba(229,9,20,0.1); }
+
+        /* ===== PROFILE - PREMIUM REDESIGN ===== */
+        #profilePage { background:var(--bg); }
+        .profile-hero-card { background:linear-gradient(135deg,rgba(229,9,20,0.15) 0%,rgba(0,212,255,0.08) 50%,rgba(17,24,39,0.9) 100%);border-bottom:1px solid var(--border);padding:80px 20px 24px;position:relative;overflow:hidden; }
+        .profile-hero-card::before { content:'';position:absolute;top:-40px;right:-30px;width:200px;height:200px;background:radial-gradient(circle,rgba(229,9,20,0.12),transparent 70%);border-radius:50%; }
+        .profile-hero-card::after { content:'';position:absolute;bottom:-20px;left:-20px;width:150px;height:150px;background:radial-gradient(circle,rgba(0,212,255,0.08),transparent 70%);border-radius:50%; }
+        .avatar { width:90px;height:90px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900;margin:0 auto 12px;position:relative;cursor:pointer; }
+        .avatar-inner { width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff6b6b);display:flex;align-items:center;justify-content:center;font-size:40px;box-shadow:0 8px 30px var(--glow),0 0 0 3px rgba(229,9,20,0.3); }
+        .avatar-edit-hint { position:absolute;bottom:0;right:0;width:26px;height:26px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#000;border:2px solid var(--bg);box-shadow:0 2px 8px rgba(0,0,0,0.5); }
+        .xp-bar-wrap { background:rgba(255,255,255,0.08);height:6px;border-radius:3px;overflow:hidden;margin:8px 0 4px; }
+        .xp-bar-fill { height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width 0.8s ease;border-radius:3px; }
+        .stats-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px; }
+        .stat-card { background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 6px;text-align:center;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden; }
+        .stat-card::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(229,9,20,0.05),transparent);opacity:0;transition:opacity 0.3s; }
+        .stat-card:hover::before { opacity:1; }
+        .stat-card:hover { border-color:rgba(229,9,20,0.4);transform:translateY(-2px); }
+        .stat-number { font-size:18px;font-weight:900;color:var(--primary); }
+        .stat-label { font-size:7px;color:#666;font-weight:800;text-transform:uppercase;margin-top:3px; }
+        .profile-section-label { font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:#555;padding:0 16px;margin:16px 0 8px; }
+        .profile-button { width:calc(100% - 32px);margin:0 16px 8px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:14px 16px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.3s;color:var(--text);font-weight:800;font-size:13px;text-align:left;text-decoration:none; }
+        .profile-button:hover { background:rgba(255,255,255,0.07);border-color:rgba(229,9,20,0.3);transform:translateX(4px); }
+        .profile-button:active { transform:scale(0.97); }
+        .profile-btn-left { display:flex;align-items:center;gap:12px; }
+        .profile-btn-icon { width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0; }
+        .profile-btn-right { display:flex;align-items:center;gap:8px; }
+        .profile-btn-arrow { color:#444;font-size:10px; }
+        .profile-btn-badge { font-size:10px;font-weight:900;padding:3px 8px;border-radius:20px; }
+        .update-highlight { border-color:rgba(0,212,255,0.5) !important;background:rgba(0,212,255,0.05) !important;box-shadow:0 0 20px rgba(0,212,255,0.1); }
+        .update-highlight:hover { box-shadow:0 0 30px rgba(0,212,255,0.2) !important; }
+        .update-ring { animation:ring-pulse 2s infinite; }
+        @keyframes ring-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,0.4);} 50%{box-shadow:0 0 0 8px rgba(0,212,255,0);} }
+        .toggle-sw { width:44px;height:24px;background:#444;border-radius:12px;cursor:pointer;transition:all 0.3s;position:relative;flex-shrink:0; }
+        .toggle-sw.on { background:var(--primary); }
+        .toggle-sw::after { content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:white;border-radius:50%;transition:left 0.3s; }
+        .toggle-sw.on::after { left:23px; }
+
+        /* ===== PLAY BUTTONS ===== */
+        .play-btn { display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:10px;font-weight:900;text-transform:uppercase;font-size:10px;color:#fff;transition:all 0.3s;border:none;cursor:pointer;width:100%;box-shadow:0 4px 12px rgba(0,0,0,0.3); }
+        .play-btn:hover { transform:translateY(-2px);filter:brightness(1.1); }
+        .q-480{background:linear-gradient(135deg,#00c6ff,#0072ff);} .q-720h{background:linear-gradient(135deg,#11998e,#38ef7d);} .q-720{background:linear-gradient(135deg,#8e2de2,#4a00e0);} .q-1080h{background:linear-gradient(135deg,#f12711,#f5af19);} .q-1080{background:linear-gradient(135deg,#ee0979,#ff6a00);} .q-4k{background:linear-gradient(135deg,#834d9b,#d04ed6);}
+
+        /* ===== MINI PLAYER ===== */
+        #miniPlayer { position:fixed;bottom:82px;right:14px;width:190px;background:var(--card-bg);border:1px solid var(--border);border-radius:14px;overflow:hidden;z-index:3500;display:none;box-shadow:0 10px 30px rgba(0,0,0,0.6);animation:slideUp 0.3s ease; }
+        @keyframes slideUp { from{transform:translateY(20px);opacity:0;} to{transform:translateY(0);opacity:1;} }
+        #miniPlayer.show { display:block; }
+
+        /* ===== SPECIAL PAGES ===== */
+        .page-header { padding:80px 20px 16px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(229,9,20,0.05),transparent); }
+        .back-btn { width:38px;height:38px;background:rgba(255,255,255,0.08);border:none;color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all 0.3s; }
+        .back-btn:hover { background:rgba(229,9,20,0.3);color:white; }
+        .page-title { font-size:18px;font-weight:900;text-transform:uppercase; }
+
+        /* ===== CHECKIN ===== */
+        .checkin-day { background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center;flex:1;transition:all 0.3s; }
+        .checkin-day.done { background:linear-gradient(135deg,var(--primary),#ff6b6b);border-color:var(--primary); }
+        .checkin-day.today { border-color:#ffd700;box-shadow:0 0 12px rgba(255,215,0,0.4); }
+
+        /* ===== SPIN WHEEL ===== */
+        #spinCanvas { border-radius:50%;box-shadow:0 0 30px rgba(229,9,20,0.4); }
+        .spin-btn { background:linear-gradient(135deg,var(--primary),#ff6b6b);color:white;padding:14px 40px;border-radius:30px;font-weight:900;text-transform:uppercase;font-size:13px;border:none;cursor:pointer;transition:all 0.3s;box-shadow:0 6px 20px var(--glow); }
+        .spin-btn:hover { transform:translateY(-3px);box-shadow:0 10px 30px var(--glow); }
+        .spin-btn:disabled { opacity:0.5;cursor:not-allowed;transform:none; }
+
+        /* ===== TRIVIA GAME ===== */
+        .trivia-option { background:rgba(255,255,255,0.05);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;font-size:12px;font-weight:800;cursor:pointer;transition:all 0.3s;margin-bottom:8px;text-align:left; }
+        .trivia-option:hover { border-color:var(--primary);background:rgba(229,9,20,0.1); }
+        .trivia-option.correct { border-color:#00cc44;background:rgba(0,204,68,0.15);color:#00cc44; }
+        .trivia-option.wrong { border-color:#ff4444;background:rgba(255,68,68,0.15);color:#ff4444; }
+
+        /* ===== WORLD MAP ===== */
+        .world-map-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:8px; }
+        .country-card { background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;transition:all 0.3s; }
+        .country-card.unlocked { border-color:rgba(0,212,255,0.5);background:rgba(0,212,255,0.05); }
+        .country-card.locked { opacity:0.5; }
+        .country-flag { font-size:24px;margin-bottom:4px; }
+        .country-name { font-size:8px;font-weight:800;text-transform:uppercase; }
+
+        /* ===== CINEMA CARD ===== */
+        #cinemaCard { background:linear-gradient(135deg,#0a0e27,#1a1a2e);border:2px solid rgba(229,9,20,0.5);border-radius:20px;padding:20px;text-align:center;position:relative;overflow:hidden; }
+        #cinemaCard::before { content:'MOVIES 5U';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:80px;font-weight:900;color:rgba(229,9,20,0.05);white-space:nowrap; }
+
+        /* ===== COMMENTS ===== */
+        .comment-item { background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px; }
+        .comment-author { font-size:11px;font-weight:900;color:var(--primary); }
+        .comment-text { font-size:11px;color:#ccc;line-height:1.5;margin-top:3px; }
+        .comment-time { font-size:9px;color:#555;margin-top:3px; }
+
+        /* ===== VIP ===== */
+        .vip-plan { background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:14px;position:relative;overflow:hidden; }
+        .vip-plan.best { border-color:rgba(255,215,0,0.6);box-shadow:0 0 20px rgba(255,215,0,0.12); }
+        .vip-plan.best::before { content:'BEST';position:absolute;top:12px;right:-22px;background:#ffd700;color:#000;font-size:8px;font-weight:900;padding:4px 28px;transform:rotate(45deg); }
+
+        /* ===== SETTINGS ===== */
+        .setting-row { display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border); }
+        .setting-label { font-weight:800;font-size:12px; }
+        .setting-desc { font-size:10px;color:#666;margin-top:2px; }
+
+        /* ===== DOWNLOAD ===== */
+        .dl-item { background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;display:flex;gap:12px;align-items:center; }
+        .dl-prog { height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin-top:5px; }
+        .dl-bar { height:100%;background:linear-gradient(90deg,var(--accent),#0072ff);animation:dl-anim 2s ease-in-out infinite; }
+        @keyframes dl-anim { 0%{width:20%;} 50%{width:80%;} 100%{width:20%;} }
+
+        /* ===== CHAI BREAK ===== */
+        #chaiTimer { font-size:48px;font-weight:900;text-align:center;color:var(--primary);font-variant-numeric:tabular-nums; }
+        .chai-recipe-item { padding:8px 0;border-bottom:1px solid var(--border);font-size:12px; }
+
+        /* ===== CONFETTI ===== */
+        .confetti-piece { position:fixed;width:10px;height:10px;z-index:99999;pointer-events:none;border-radius:2px;animation:confetti-fall 3s ease forwards; }
+        @keyframes confetti-fall { 0%{transform:translateY(-100px) rotate(0deg);opacity:1;} 100%{transform:translateY(100vh) rotate(720deg);opacity:0;} }
+
+        /* ===== XP BAR ===== */
+        .xp-bar-wrap { background:rgba(255,255,255,0.08);height:6px;border-radius:3px;overflow:hidden; }
+        .xp-bar-fill { height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width 0.8s ease;border-radius:3px; }
+
+        /* ===== SEARCH SUGGESTIONS ===== */
+        #searchWrap { position:relative; }
+
+        /* ===== BIRTHDAY ANIMATION ===== */
+        #birthdayBanner { position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.9);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center; }
+        #birthdayBanner.show { display:flex; }
+
+        /* ===== EMOTION MATCHER ===== */
+        .emotion-card { background:var(--card-bg);border:1.5px solid var(--border);border-radius:16px;padding:16px;cursor:pointer;transition:all 0.3s;text-align:center; }
+        .emotion-card:hover { transform:translateY(-5px);border-color:var(--primary); }
+        .emotion-emoji { font-size:36px;margin-bottom:8px; }
+        .emotion-label { font-size:11px;font-weight:900;text-transform:uppercase; }
+
+        /* ===== SCREEN TIME ===== */
+        #screenTimeBar { position:fixed;top:60px;left:0;right:0;background:linear-gradient(90deg,#ff8c00,#ff4444);padding:8px 16px;z-index:35;display:none;align-items:center;gap:10px;font-size:11px;font-weight:800;color:white; }
+        #screenTimeBar.show { display:flex; }
+
+        /* ===== PULL TO REFRESH ===== */
+        #pullRefreshIndicator { position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--card-bg);border:1px solid var(--border);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;z-index:50;opacity:0;transition:opacity 0.3s;font-size:18px; }
+
+        /* ===== ONBOARDING ===== */
+        #onboarding { position:fixed;inset:0;background:linear-gradient(135deg,#0a0e27,#1a1a2e);z-index:99990;display:none;flex-direction:column;overflow-y:auto; }
+        #onboarding.show { display:flex; }
+        .ob-genre-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px; }
+        .ob-genre-card { background:var(--card-bg);border:2px solid var(--border);border-radius:14px;padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.3s; }
+        .ob-genre-card.selected { border-color:var(--primary);background:rgba(229,9,20,0.15); }
+        .ob-genre-icon { font-size:28px;margin-bottom:6px; }
+        .ob-genre-name { font-size:10px;font-weight:900;text-transform:uppercase; }
+
+        /* ===== PILL INPUT ===== */
+        .pill-input { background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--text);font-family:'Urbanist',sans-serif;font-size:12px;font-weight:600;outline:none;width:100%;transition:all 0.3s;margin-bottom:10px; }
+        .pill-input:focus { border-color:var(--primary); }
+
+        /* ===== TOAST ===== */
+        #toast { position:fixed;bottom:95px;left:50%;transform:translateX(-50%);background:rgba(17,24,39,0.97);border:1px solid rgba(229,9,20,0.4);color:white;padding:10px 22px;border-radius:50px;font-weight:900;font-size:11px;z-index:99999;text-align:center;white-space:nowrap;transition:all 0.3s;display:none;box-shadow:0 8px 25px rgba(0,0,0,0.5); }
+
+        /* ===== UTILS ===== */
+        .no-scrollbar::-webkit-scrollbar { display:none; }
+        .no-scrollbar { -ms-overflow-style:none;scrollbar-width:none; }
+        .flex-c { display:flex;align-items:center;justify-content:center; }
+        .hidden { display:none !important; }
+        .fade-in { animation:fadeIn 0.4s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+        .grid-3 { display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px; }
+        .related-scroll { display:flex;gap:10px;overflow-x:auto;padding-bottom:6px; }
+        .related-item { flex-shrink:0;width:90px;cursor:pointer;transition:all 0.3s; }
+        .related-item:hover { transform:scale(1.05); }
+        .related-item img { width:100%;aspect-ratio:2/3;object-fit:cover;object-position:center top;border-radius:10px; }
+        .related-item p { font-size:8px;font-weight:800;text-align:center;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+
+        /* ===== EMOJI PICKER ===== */
+        .emoji-grid { display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:12px; }
+        .emoji-opt { width:44px;height:44px;border-radius:12px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;transition:all 0.3s; }
+        .emoji-opt:hover,.emoji-opt.selected { border-color:var(--primary);background:rgba(229,9,20,0.15);transform:scale(1.1); }
+
+        /* ===== NOTIFICATION ITEM ===== */
+        .notif-item { display:flex;gap:12px;padding:12px;border-radius:12px;margin-bottom:8px;border:1px solid var(--border);background:rgba(255,255,255,0.03);cursor:pointer;transition:all 0.3s;position:relative; }
+        .notif-item:hover { background:rgba(255,255,255,0.06); }
+        .notif-item.unread { border-color:rgba(229,9,20,0.3);background:rgba(229,9,20,0.04); }
+        .notif-item.unread::before { content:'';position:absolute;top:12px;right:12px;width:8px;height:8px;background:var(--primary);border-radius:50%; }
+        .notif-icon { width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0; }
+        .notif-read-btn { position:absolute;bottom:8px;right:8px;background:none;border:none;color:#555;cursor:pointer;font-size:10px;font-weight:800;padding:4px 8px;border-radius:6px;transition:all 0.2s; }
+        .notif-read-btn:hover { background:rgba(229,9,20,0.2);color:var(--primary); }
+
+        /* ===== POLLS ===== */
+        .poll-option { background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all 0.3s;margin-bottom:8px;position:relative;overflow:hidden; }
+        .poll-option:hover { border-color:var(--primary); }
+        .poll-bar { position:absolute;top:0;left:0;bottom:0;background:rgba(229,9,20,0.15);transition:width 1s ease; }
+        .poll-label { position:relative;z-index:2;font-weight:800;font-size:12px; }
+        .poll-pct { position:absolute;right:14px;top:50%;transform:translateY(-50%);font-weight:900;font-size:12px;color:var(--primary);z-index:2; }
+    </style>
+</head>
+<body class="no-scrollbar">
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+<!-- TOAST -->
+<div id="toast"></div>
+<!-- SCREEN TIME -->
+<div id="screenTimeBar">
+    <i class="fa fa-clock"></i>
+    <span id="screenTimeMsg">Aap 2 ghante se dekh rahe ho! Thoda break lo 🙏</span>
+    <button onclick="document.getElementById('screenTimeBar').classList.remove('show')" style="margin-left:auto;background:rgba(255,255,255,0.2);border:none;color:white;border-radius:8px;padding:4px 10px;font-weight:800;font-size:10px;cursor:pointer;">OK</button>
+</div>
+<!-- PULL REFRESH -->
+<div id="pullRefreshIndicator">🔄</div>
+<!-- CONFETTI -->
+<div id="confettiContainer"></div>
+<!-- BIRTHDAY BANNER -->
+<div id="birthdayBanner">
+    <div style="font-size:80px;">🎂</div>
+    <h2 style="font-size:28px;font-weight:900;color:var(--primary);">HAPPY BIRTHDAY!</h2>
+    <p style="color:#aaa;font-size:14px;">Movies 5U ki taraf se aapko pyaar bhari shubhkamnayein! 🎉</p>
+    <div style="background:linear-gradient(135deg,var(--primary),#ff6b6b);color:white;padding:12px 30px;border-radius:12px;font-weight:900;font-size:13px;cursor:pointer;" onclick="document.getElementById('birthdayBanner').classList.remove('show')">+100 Points Claim Karo 🎁</div>
+</div>
+<!-- GHOST MODE -->
+<div class="ghost-banner" id="ghostBanner" style="position:fixed;top:65px;left:50%;transform:translateX(-50%);z-index:39;padding:5px 14px;">
+    👻 Ghost Mode On — History save nahi ho rahi
+</div>
+
+<!-- APP UPDATE POPUP (HOME SCREEN) -->
+<div id="appUpdatePopup">
+    <div class="update-icon-anim">🔄</div>
+    <div style="flex:1;">
+        <p style="font-weight:900;font-size:13px;color:var(--accent);">New Update Available!</p>
+        <p id="updatePopupDesc" style="font-size:10px;color:#888;margin-top:2px;">Version <span id="popupNewVer"></span> is ready</p>
+    </div>
+    <button onclick="installAppUpdate()" style="background:linear-gradient(135deg,var(--accent),#0072ff);color:#000;border:none;border-radius:10px;padding:8px 14px;font-weight:900;font-size:10px;cursor:pointer;white-space:nowrap;">Update Now</button>
+    <button onclick="document.getElementById('appUpdatePopup').classList.remove('show')" style="background:none;border:none;color:#555;cursor:pointer;font-size:14px;padding:4px;">✕</button>
+</div>
+
+<!-- SPLASH SCREEN -->
+<div id="splash" class="flex-c" style="flex-direction:column;gap:20px;">
+    <div class="splash-logo-wrap">
+        <div class="splash-logo-ring"></div>
+        <div class="splash-logo-ring2"></div>
+        <h1 class="logo-anim">MOVIES 5U</h1>
+    </div>
+    <p class="splash-tagline">Premium Streaming Experience</p>
+    <div class="splash-dots">
+        <div class="splash-dot-anim"></div>
+        <div class="splash-dot-anim"></div>
+        <div class="splash-dot-anim"></div>
+    </div>
+    <div class="splash-bar-wrap"><div class="splash-bar"></div></div>
+    <p id="splashTip" style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:1px;">Loading...</p>
+</div>
+
+<!-- HEADER -->
+<nav id="mainHeader">
+    <div class="header-logo" id="headerLogo" onclick="logoTapCount()">Movies 5U</div>
+    <div class="header-icons">
+        <div class="header-icon" onclick="toggleGhostMode()" id="ghostIcon" style="color:#555;"><i class="fa fa-ghost text-base"></i></div>
+        <div class="header-icon" onclick="toggleTheme()"><i class="fa fa-circle-half-stroke text-base"></i></div>
+        <div class="header-icon relative" onclick="openNotifications()">
+            <i class="fa fa-bell text-base"></i>
+            <span id="nDot" class="notif-dot"></span>
+        </div>
+        <div class="header-icon" onclick="openLanguageModal()"><i class="fa fa-globe text-base"></i></div>
+    </div>
+</nav>
+
+<!-- NEWS TICKER -->
+<div id="newsTicker">
+    <div class="ticker-content" id="tickerContent">
+        <span class="ticker-item">🎬 Pushpa 2 Now in 4K!</span>
+        <span class="ticker-item">🔥 Top 10 Updated Daily</span>
+        <span class="ticker-item">⭐ New Web Series Added</span>
+        <span class="ticker-item">📝 Request Any Movie — Ek Click!</span>
+        <span class="ticker-item">📱 Install App for Better Experience</span>
+        <span class="ticker-item">🎬 Pushpa 2 Now in 4K!</span>
+    </div>
+</div>
+
+<!-- ===== HOME PAGE ===== -->
+<div id="page-home" class="page-view active" style="padding-top:0;">
+    <div id="heroBox"></div>
+
+    <!-- CONTINUE WATCHING -->
+    <div id="continueSection" class="carousel-section hidden" style="margin-top:12px;">
+        <div class="carousel-label" style="color:var(--accent);"><span><i class="fa fa-play-circle mr-2"></i>Continue Watching</span></div>
+        <div class="carousel-scroll no-scrollbar" id="continueGrid"></div>
+    </div>
+
+    <!-- PLAYERJET BANNER -->
+    <div class="banner-premium">
+        <div class="banner-icon">📱</div>
+        <div class="banner-content"><h4 class="banner-title">PlayerJet App</h4><p class="banner-desc">Better streaming experience</p></div>
+        <button onclick="downloadPlayerjet()" class="banner-btn">Download</button>
+    </div>
+
+    <!-- HOW TO WATCH -->
+    <div class="banner-premium" style="border-color:rgba(255,193,7,0.3);background:linear-gradient(135deg,#2d1b00,#1a0f00);">
+        <div class="banner-icon">▶️</div>
+        <div class="banner-content"><h4 class="banner-title">How to Watch</h4><p class="banner-desc">Tutorial video guide</p></div>
+        <button onclick="openHowToWatch()" class="banner-btn" style="background:linear-gradient(135deg,#ffc107,#ff9800);">Watch</button>
+    </div>
+
+    <!-- ON THIS DAY -->
+    <div id="onThisDaySection" class="hidden" style="margin:0 16px 16px;">
+        <div style="background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,212,255,0.03));border:1px solid rgba(0,212,255,0.2);border-radius:14px;padding:14px;">
+            <p style="font-size:11px;color:var(--accent);font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;"><i class="fa fa-calendar mr-2"></i>On This Day</p>
+            <p id="onThisDayText" style="font-size:12px;color:#ccc;"></p>
+        </div>
+    </div>
+
+    <!-- WATCHLIST -->
+    <div id="watchlistSection" class="carousel-section hidden">
+        <div class="carousel-label" style="color:var(--primary);"><span><i class="fa fa-heart mr-2"></i>My Watchlist</span></div>
+        <div class="carousel-scroll no-scrollbar" id="watchlistGrid"></div>
+    </div>
+
+    <!-- FOR YOU -->
+    <div id="forYouSection" class="hidden" style="margin-bottom:16px;">
+        <div style="padding:0 16px;margin-bottom:10px;"><p class="section-title"><i class="fa fa-magic mr-2" style="color:var(--accent)"></i>For You</p></div>
+        <div id="forYouGrid" style="padding:0 12px;"></div>
+    </div>
+
+    <!-- MOOD -->
+    <div style="margin:4px 0 12px;">
+        <div style="padding:0 16px;margin-bottom:8px;"><p class="section-title">Aaj Kya Dekhe?</p></div>
+        <div class="mood-scroll no-scrollbar">
+            <button class="mood-btn" onclick="moodFilter('Action',this)">🔥 Action</button>
+            <button class="mood-btn" onclick="moodFilter('Comedy',this)">😂 Comedy</button>
+            <button class="mood-btn" onclick="moodFilter('Romance',this)">❤️ Romance</button>
+            <button class="mood-btn" onclick="moodFilter('Horror',this)">👻 Horror</button>
+            <button class="mood-btn" onclick="moodFilter('Thriller',this)">🎭 Thriller</button>
+            <button class="mood-btn" onclick="moodFilter('Sci-Fi',this)">🚀 Sci-Fi</button>
+            <button class="mood-btn" onclick="moodFilter('Family',this)">👨‍👩‍👧 Family</button>
+            <button class="mood-btn" onclick="openEmotionMatcher()">😊 Mood?</button>
+            <button class="mood-btn" onclick="shakeRandom()">🎲 Surprise!</button>
+        </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div style="margin-bottom:16px;">
+        <div style="padding:0 16px;margin-bottom:10px;"><p class="section-title">Browse Categories</p></div>
+        <div class="categories-grid" id="categoriesGrid"></div>
+    </div>
+
+    <!-- LANG FILTER -->
+    <div style="margin-bottom:10px;">
+        <div class="filter-tabs no-scrollbar">
+            <button class="filter-tab active" onclick="langFilter('All',this)">🌍 All</button>
+            <button class="filter-tab" onclick="langFilter('Hindi',this)">🇮🇳 Hindi</button>
+            <button class="filter-tab" onclick="langFilter('English',this)">🇺🇸 English</button>
+            <button class="filter-tab" onclick="langFilter('Tamil',this)">🎵 Tamil</button>
+            <button class="filter-tab" onclick="langFilter('Telugu',this)">🎭 Telugu</button>
+            <button class="filter-tab" onclick="langFilter('Malayalam',this)">🌴 Malay</button>
+            <button class="filter-tab" onclick="langFilter('Bengali',this)">🎶 Bengali</button>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="flex gap-2 px-4 mb-3">
+        <select id="yearFilter" onchange="applyFilters()" class="search-bar flex-1">
+            <option value="all">All Years</option>
+        </select>
+        <select id="sortFilter" onchange="applyFilters()" class="search-bar flex-1">
+            <option value="newest">Newest</option>
+            <option value="popular">Popular</option>
+            <option value="az">A-Z</option>
+        </select>
+    </div>
+
+    <!-- TRENDING TOP 10 -->
+    <div id="trendingSection" class="carousel-section hidden">
+        <div class="carousel-label" style="color:#ffc107;"><span><i class="fa fa-fire mr-2"></i>Top 10 Trending</span></div>
+        <div class="carousel-scroll no-scrollbar" id="trendingGrid"></div>
+    </div>
+
+    <!-- COMING SOON -->
+    <div id="comingSoonSection" class="carousel-section hidden">
+        <div class="carousel-label" style="color:#ff8c00;"><span><i class="fa fa-clock mr-2"></i>Coming Soon</span></div>
+        <div class="carousel-scroll no-scrollbar" id="comingSoonGrid"></div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div id="mainGrid"></div>
+</div>
+
+<!-- ===== SEARCH PAGE ===== -->
+<div id="searchPage" class="page-view">
+    <div class="page-header" style="padding:80px 16px 14px;display:flex;flex-direction:column;gap:10px;">
+        <div class="flex items-center gap-3">
+            <button class="back-btn" onclick="closePage('searchPage')"><i class="fa fa-arrow-left"></i></button>
+            <div id="searchWrap" class="flex-1 relative">
+                <input type="text" id="sInp" oninput="doSearch(this.value);showSuggestions(this.value)" onfocus="showSuggestions(this.value)" onblur="setTimeout(()=>hideSuggestions(),200)" placeholder="Search movies, actors..." class="search-bar">
+                <div id="searchSuggestions"></div>
+            </div>
+            <button onclick="startVoiceSearch()" style="width:40px;height:40px;background:var(--primary);border:none;border-radius:12px;color:white;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="fa fa-microphone"></i></button>
+        </div>
+        <div class="flex gap-2">
+            <select id="searchGenre" onchange="doSearch(document.getElementById('sInp').value)" class="search-bar text-xs flex-1" style="padding:8px 12px;">
+                <option value="">All Genres</option>
+                <option>Action</option><option>Comedy</option><option>Drama</option><option>Horror</option><option>Romance</option><option>Thriller</option><option>Sci-Fi</option>
+            </select>
+            <select id="searchLang" onchange="doSearch(document.getElementById('sInp').value)" class="search-bar text-xs flex-1" style="padding:8px 12px;">
+                <option value="">All Languages</option>
+                <option>Hindi</option><option>English</option><option>Tamil</option><option>Telugu</option>
+            </select>
+        </div>
+    </div>
+    <div id="searchRecommend" class="px-4 mb-3">
+        <h4 class="text-xs font-black uppercase mb-2 text-gray-500">🔥 Trending Searches</h4>
+        <div class="flex flex-wrap gap-2">
+            <span class="bg-zinc-800 px-3 py-1.5 rounded-full text-xs cursor-pointer hover:bg-red-600 transition font-bold" onclick="quickSearch('Pushpa 2')">Pushpa 2</span>
+            <span class="bg-zinc-800 px-3 py-1.5 rounded-full text-xs cursor-pointer hover:bg-red-600 transition font-bold" onclick="quickSearch('KGF')">KGF</span>
+            <span class="bg-zinc-800 px-3 py-1.5 rounded-full text-xs cursor-pointer hover:bg-red-600 transition font-bold" onclick="quickSearch('Animal')">Animal</span>
+            <span class="bg-zinc-800 px-3 py-1.5 rounded-full text-xs cursor-pointer hover:bg-red-600 transition font-bold" onclick="quickSearch('Stree 2')">Stree 2</span>
+            <span class="bg-zinc-800 px-3 py-1.5 rounded-full text-xs cursor-pointer hover:bg-red-600 transition font-bold" onclick="quickSearch('RRR')">RRR</span>
+        </div>
+    </div>
+    <div id="searchGrid" class="grid-3"></div>
+</div>
+
+<!-- ===== PROFILE PAGE - PREMIUM REDESIGN ===== -->
+<div id="profilePage" class="page-view">
+    <!-- Hero Card -->
+    <div class="profile-hero-card">
+        <div style="text-align:center;position:relative;z-index:2;">
+            <div class="avatar" onclick="openEmojiPicker()">
+                <div class="avatar-inner" id="userAvatarInner"><span id="avatarEmoji">🎬</span></div>
+                <div class="avatar-edit-hint">✏️</div>
+            </div>
+            <!-- Name Edit -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:4px;">
+                <h2 style="font-size:22px;font-weight:900;text-transform:uppercase;" id="uNameDisplay">USER</h2>
+                <button onclick="openNameEdit()" style="background:none;border:none;color:#555;cursor:pointer;font-size:13px;padding:4px;"><i class="fa fa-pen"></i></button>
+            </div>
+            <p style="font-size:11px;color:var(--primary);font-weight:800;" id="userLevelText">Level 1 • 0 Points</p>
+            <div class="xp-bar-wrap" style="margin:8px 30px 4px;"><div class="xp-bar-fill" id="xpBar" style="width:30%;"></div></div>
+            <p style="font-size:9px;color:#555;" id="xpText">30/100 XP to next level</p>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card" onclick="openWishlistPage()">
+            <div class="stat-number" id="wishlistCount">0</div>
+            <div class="stat-label">Wishlist</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="hoursWatched">0</div>
+            <div class="stat-label">Hours</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="userPointsDisp">0</div>
+            <div class="stat-label">Points</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="streakDisp">0🔥</div>
+            <div class="stat-label">Streak</div>
+        </div>
+    </div>
+
+    <div style="padding-bottom:100px;">
+        <!-- Section: Content -->
+        <p class="profile-section-label">🎬 Content</p>
+
+        <button onclick="openMovieRequest()" class="profile-button">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#e50914,#ff6b6b);">📝</div>
+                <div><p style="font-size:13px;font-weight:900;">Request a Movie</p><p style="font-size:10px;color:#888;margin-top:1px;">Apni favourite movie request karo</p></div>
+            </div>
+            <div class="profile-btn-right">
+                <span class="profile-btn-badge" style="background:rgba(0,204,68,0.15);color:#00cc44;">+15 pts</span>
+                <i class="fa fa-chevron-right profile-btn-arrow"></i>
+            </div>
+        </button>
+
+        <button onclick="openYearlyWrapped()" class="profile-button">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#ff8c00,#ffd700);">📊</div>
+                <div><p style="font-size:13px;font-weight:900;">Your Yearly Wrapped</p><p style="font-size:10px;color:#888;margin-top:1px;">Year ke top movies & stats</p></div>
+            </div>
+            <div class="profile-btn-right"><i class="fa fa-chevron-right profile-btn-arrow"></i></div>
+        </button>
+
+        <button onclick="openWorldMap()" class="profile-button">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#00cc44,#38f9d7);">🗺️</div>
+                <div><p style="font-size:13px;font-weight:900;">Movie World Map</p><p style="font-size:10px;color:#888;margin-top:1px;">Duniya bhar ki movies explore karo</p></div>
+            </div>
+            <div class="profile-btn-right"><i class="fa fa-chevron-right profile-btn-arrow"></i></div>
+        </button>
+
+        <button onclick="openCinemaCard()" class="profile-button">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#8e2de2,#4a00e0);">📸</div>
+                <div><p style="font-size:13px;font-weight:900;">Cinema Card</p><p style="font-size:10px;color:#888;margin-top:1px;">Share your movie card</p></div>
+            </div>
+            <div class="profile-btn-right"><i class="fa fa-chevron-right profile-btn-arrow"></i></div>
+        </button>
+
+        <button onclick="openChaiBreak()" class="profile-button">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#f5c518,#ff8c00);">☕</div>
+                <div><p style="font-size:13px;font-weight:900;">Chai Break Timer</p><p style="font-size:10px;color:#888;margin-top:1px;">Perfect chai ke saath movie</p></div>
+            </div>
+            <div class="profile-btn-right"><i class="fa fa-chevron-right profile-btn-arrow"></i></div>
+        </button>
+
+        <!-- Section: App -->
+        <p class="profile-section-label">⚙️ App</p>
+
+        <button onclick="checkAppUpdate()" class="profile-button" id="profileUpdateBtn">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#00d4ff,#0072ff);" id="profileUpdateIconBox">
+                    <span style="font-size:18px;position:relative;">🔄<span class="update-badge-dot" id="profileUpdateDot" style="display:none;"></span></span>
+                </div>
+                <div>
+                    <p style="font-size:13px;font-weight:900;">App Update</p>
+                    <p style="font-size:10px;color:#888;margin-top:1px;" id="profileUpdateStatus">Latest version installed ✅</p>
+                </div>
+            </div>
+            <div class="profile-btn-right">
+                <span class="profile-btn-badge" id="profileUpdateBadge" style="background:rgba(0,212,255,0.15);color:var(--accent);">Latest</span>
+                <i class="fa fa-chevron-right profile-btn-arrow"></i>
+            </div>
+        </button>
+
+        <button onclick="openSettings()" class="profile-button">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#4a4a6a,#2d2d4e);">⚙️</div>
+                <div><p style="font-size:13px;font-weight:900;">Settings</p><p style="font-size:10px;color:#888;margin-top:1px;">App preferences customize karo</p></div>
+            </div>
+            <div class="profile-btn-right"><i class="fa fa-chevron-right profile-btn-arrow"></i></div>
+        </button>
+
+        <!-- Section: Personalize -->
+        <p class="profile-section-label">🎨 Personalize</p>
+
+        <div class="profile-button" style="cursor:default;">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#667eea,#764ba2);">👶</div>
+                <div><p style="font-size:13px;font-weight:900;">Kids Mode</p><p style="font-size:10px;color:#888;margin-top:1px;">18+ content hide karo</p></div>
+            </div>
+            <div class="toggle-sw" id="kidsModeToggle" onclick="toggleKidsMode(this)"></div>
+        </div>
+
+        <div class="profile-button" style="cursor:default;">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#1a1a3e,#330867);">🌙</div>
+                <div><p style="font-size:13px;font-weight:900;">Night Owl Mode</p><p style="font-size:10px;color:#888;margin-top:1px;">Raat ke liye dimmer screen</p></div>
+            </div>
+            <div class="toggle-sw" id="nightOwlToggle" onclick="toggleNightOwlBtn(this)"></div>
+        </div>
+
+        <!-- Section: More -->
+        <p class="profile-section-label">📱 More</p>
+
+        <button onclick="openVIPPage()" class="profile-button" style="border-color:rgba(255,215,0,0.3);background:rgba(255,215,0,0.04);">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#ffd700,#ff8c00);">👑</div>
+                <div><p style="font-size:13px;font-weight:900;color:#ffd700;">Go VIP</p><p style="font-size:10px;color:#888;margin-top:1px;">Ad-free, 4K, exclusive content</p></div>
+            </div>
+            <div class="profile-btn-right">
+                <span class="profile-btn-badge" style="background:rgba(255,215,0,0.15);color:#ffd700;">₹49/mo</span>
+                <i class="fa fa-chevron-right profile-btn-arrow"></i>
+            </div>
+        </button>
+
+        <button onclick="installPWA()" class="profile-button" style="border-color:rgba(0,212,255,0.2);">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#00d4ff,#0072ff);">📱</div>
+                <div><p style="font-size:13px;font-weight:900;">Install App</p><p style="font-size:10px;color:#888;margin-top:1px;">Home screen pe add karo</p></div>
+            </div>
+            <div class="profile-btn-right">
+                <span class="profile-btn-badge" style="background:rgba(0,212,255,0.15);color:var(--accent);">PWA</span>
+                <i class="fa fa-chevron-right profile-btn-arrow"></i>
+            </div>
+        </button>
+
+        <a href="https://t.me/Movies5u_app" target="_blank" class="profile-button">
+            <div class="profile-btn-left">
+                <div class="profile-btn-icon" style="background:linear-gradient(135deg,#2ca5e0,#0088cc);">✈️</div>
+                <div><p style="font-size:13px;font-weight:900;">Join Telegram</p><p style="font-size:10px;color:#888;margin-top:1px;">Updates, new movies alerts</p></div>
+            </div>
+            <div class="profile-btn-right"><i class="fa fa-external-link profile-btn-arrow"></i></div>
+        </a>
+
+        <!-- User ID -->
+        <div style="margin:16px 16px 4px;padding:12px 16px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:12px;display:flex;justify-content:space-between;align-items:center;">
+            <div><p style="font-size:11px;color:#555;font-weight:800;">User ID</p><p style="font-size:12px;font-weight:900;" id="settingsUserId"></p></div>
+            <div style="font-size:10px;color:#333;font-weight:800;">v3.0.0</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== WISHLIST PAGE ===== -->
+<div id="wishlistPage" class="page-view">
+    <div class="page-header"><button class="back-btn" onclick="closePage('wishlistPage')"><i class="fa fa-arrow-left"></i></button><p class="page-title">My Wishlist ❤️</p></div>
+    <div id="wishlistFullGrid" class="grid-3" style="padding-top:4px;"></div>
+</div>
+
+<!-- ===== VIP PAGE ===== -->
+<div id="vipPage" class="page-view">
+    <div class="page-header"><button class="back-btn" onclick="closePage('vipPage')"><i class="fa fa-arrow-left"></i></button><p class="page-title" style="color:#ffd700;">👑 Go VIP</p></div>
+    <div style="padding:16px 16px 80px;">
+        <div style="background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:16px;padding:16px;margin-bottom:14px;">
+            <p class="text-xs font-black uppercase mb-3" style="color:#ffd700;">VIP Benefits</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div class="flex items-center gap-2 text-xs font-semibold"><span class="text-green-400">✅</span>Ad-Free Streaming</div>
+                <div class="flex items-center gap-2 text-xs font-semibold"><span class="text-green-400">✅</span>4K Ultra HD</div>
+                <div class="flex items-center gap-2 text-xs font-semibold"><span class="text-green-400">✅</span>Early Releases</div>
+                <div class="flex items-center gap-2 text-xs font-semibold"><span class="text-green-400">✅</span>Priority Requests</div>
+                <div class="flex items-center gap-2 text-xs font-semibold"><span class="text-green-400">✅</span>Exclusive Content</div>
+                <div class="flex items-center gap-2 text-xs font-semibold"><span class="text-green-400">✅</span>Offline Download</div>
+                <div class="flex items-center gap-2 text-xs font-semibold"><span class="text-green-400">✅</span>Priority Support</div>
+                <div class="flex items-center gap-2 text-xs font-semibold"><span class="text-green-400">✅</span>VIP Badge</div>
+            </div>
+        </div>
+        <div class="vip-plan"><div class="flex justify-between items-center mb-3"><div><p class="font-black text-sm">Monthly Plan</p><p class="text-gray-400 text-xs">Billed monthly</p></div><div class="text-right"><p style="font-size:26px;font-weight:900;color:#ffd700;">₹49</p><p class="text-gray-400 text-xs">/month</p></div></div><button onclick="buyVIP('monthly')" class="w-full py-3 rounded-xl font-black text-sm uppercase text-black" style="background:linear-gradient(135deg,#ffd700,#ff8c00);">Subscribe Now</button></div>
+        <div class="vip-plan best"><div class="flex justify-between items-center mb-3"><div><p class="font-black text-sm">Yearly Plan</p><p class="text-green-400 text-xs">Save 50% — Best Value!</p></div><div class="text-right"><p style="font-size:26px;font-weight:900;color:#ffd700;">₹299</p><p class="text-gray-400 text-xs">/year</p></div></div><button onclick="buyVIP('yearly')" class="w-full py-3 rounded-xl font-black text-sm uppercase text-black" style="background:linear-gradient(135deg,#ffd700,#ff8c00);">Subscribe Now — Best Deal!</button></div>
+    </div>
+</div>
+
+<!-- ===== SETTINGS PAGE ===== -->
+<div id="settingsPage" class="page-view">
+    <div class="page-header"><button class="back-btn" onclick="closePage('settingsPage')"><i class="fa fa-arrow-left"></i></button><p class="page-title">⚙️ Settings</p></div>
+    <div style="padding:0 16px 80px;">
+        <p class="text-xs font-black uppercase text-gray-500 mt-4 mb-2">Playback</p>
+        <div class="setting-row"><div><p class="setting-label">Default Quality</p><p class="setting-desc">Auto select quality</p></div><select id="defQuality" class="search-bar" style="width:100px;padding:6px 10px;font-size:11px;" onchange="saveSetting('quality',this.value)"><option value="auto">Auto</option><option value="480p">480p</option><option value="720p">720p</option><option value="1080p">1080p</option><option value="4k">4K</option></select></div>
+        <div class="setting-row"><div><p class="setting-label">Data Saver</p><p class="setting-desc">Reduce data usage</p></div><div class="toggle-sw" id="dataSaverToggle" onclick="toggleSetting('dataSaver',this)"></div></div>
+        <div class="setting-row"><div><p class="setting-label">Auto-Play Next</p><p class="setting-desc">Next episode auto play</p></div><div class="toggle-sw on" id="autoPlayToggle" onclick="toggleSetting('autoPlay',this)"></div></div>
+        <div class="setting-row"><div><p class="setting-label">Screen Time Alert</p><p class="setting-desc">Alert after 2 hours</p></div><div class="toggle-sw on" id="screenTimeToggle" onclick="toggleSetting('screenTime',this)"></div></div>
+        <p class="text-xs font-black uppercase text-gray-500 mt-5 mb-2">Notifications</p>
+        <div class="setting-row"><div><p class="setting-label">New Movies</p></div><div class="toggle-sw on" id="notifNewToggle" onclick="toggleSetting('notifNew',this)"></div></div>
+        <div class="setting-row"><div><p class="setting-label">Request Updates</p></div><div class="toggle-sw on" id="notifReqToggle" onclick="toggleSetting('notifReq',this)"></div></div>
+        <p class="text-xs font-black uppercase text-gray-500 mt-5 mb-2">Privacy</p>
+        <div class="setting-row"><div><p class="setting-label">Save Watch History</p></div><div class="toggle-sw on" id="historyToggle" onclick="toggleSetting('history',this)"></div></div>
+        <div class="setting-row"><div><p class="setting-label">Kids Mode PIN</p></div><button onclick="setKidsPin()" class="text-xs font-black text-blue-400">Set PIN</button></div>
+        <div class="setting-row"><div><p class="setting-label">Birthday</p><p class="setting-desc">For birthday surprise!</p></div><input type="date" id="birthdayInput" class="search-bar" style="width:140px;padding:6px 10px;font-size:11px;" onchange="saveSetting('birthday',this.value)"></div>
+        <p class="text-xs font-black uppercase text-gray-500 mt-5 mb-2">About</p>
+        <div class="setting-row"><p class="setting-label">App Version</p><p class="text-gray-500 text-xs">v3.0.0 Ultimate</p></div>
+        <div class="setting-row"><p class="setting-label">User ID</p><p class="text-gray-500 text-xs" id="settingsUserIdSub"></p></div>
+        <button onclick="clearAllData()" class="w-full mt-5 py-3 rounded-xl font-black text-sm uppercase" style="background:rgba(229,9,20,0.1);border:1px solid rgba(229,9,20,0.3);color:#ff6666;"><i class="fa fa-trash mr-2"></i>Clear All App Data</button>
+    </div>
+</div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<div class="bottom-nav">
+    <div onclick="goHome()" class="nav-item active" id="nav-home"><i class="fa fa-house-chimney text-base"></i><span>Home</span></div>
+    <div onclick="openPage('searchPage')" class="nav-item" id="nav-search"><i class="fa fa-magnifying-glass text-base"></i><span>Search</span></div>
+    <div onclick="openMovieRequest()" class="nav-item" id="nav-request"><i class="fa fa-paper-plane text-base"></i><span>Request</span></div>
+    <div onclick="openWishlistPage()" class="nav-item" id="nav-wishlist"><i class="fa fa-heart text-base"></i><span>Wishlist</span></div>
+    <div onclick="openPage('profilePage')" class="nav-item" id="nav-profile"><i class="fa fa-user text-base"></i><span>Profile</span></div>
+</div>
+
+<!-- ===== MINI PLAYER ===== -->
+<div id="miniPlayer">
+    <img id="miniThumb" class="w-full object-cover" style="height:90px;" src="">
+    <button onclick="closeMiniPlayer()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.7);border:none;color:white;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;">✕</button>
+    <div style="padding:8px;">
+        <p style="font-size:10px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="miniTitle">Movie</p>
+        <button onclick="resumeFromMini()" style="font-size:9px;font-weight:800;color:var(--primary);background:none;border:none;cursor:pointer;margin-top:2px;">▶ Resume</button>
+    </div>
+</div>
+
+<!-- ===== MOVIE DETAILS PAGE ===== -->
+<div id="streamM" class="page-view no-scrollbar">
+    <div class="relative pb-32">
+        <div style="position:absolute;top:50px;left:14px;right:14px;z-index:50;display:flex;justify-content:space-between;">
+            <button class="back-btn" onclick="closePage('streamM')" style="background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);"><i class="fa fa-arrow-left"></i></button>
+            <div class="flex gap-2">
+                <button class="back-btn" onclick="shareMovie()" style="background:rgba(0,0,0,0.7);"><i class="fa fa-share-nodes"></i></button>
+                <button class="back-btn" onclick="addToDownloadQueue()" style="background:rgba(0,0,0,0.7);"><i class="fa fa-download"></i></button>
+                <button class="back-btn" id="wishlistBtn" onclick="toggleWatchlist()" style="background:rgba(0,0,0,0.7);"><i class="fa fa-heart"></i></button>
+                <button class="back-btn" onclick="openDedicateMovie()" style="background:rgba(0,0,0,0.7);"><i class="fa fa-gift"></i></button>
+            </div>
+        </div>
+        <div id="mPostBox" style="position:relative;height:52vh;">
+            <img id="mPost" style="width:100%;height:100%;object-fit:cover;object-position:center top;" src="">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,var(--bg) 100%);"></div>
+        </div>
+        <div style="padding:0 18px;margin-top:-60px;position:relative;z-index:10;">
+            <h1 id="mTitle" style="font-size:30px;font-weight:900;text-transform:uppercase;line-height:1.2;text-shadow:2px 2px 10px rgba(0,0,0,0.9);margin-bottom:8px;">Movie Title</h1>
+            <div class="flex items-center gap-2 mb-3">
+                <i class="fa fa-star text-yellow-500 text-xs"></i>
+                <span id="avgRating" class="font-bold text-sm">4.5</span>
+                <span class="text-gray-500 text-xs">(<span id="ratingCount">0</span> ratings)</span>
+                <span class="text-gray-500 text-xs ml-auto"><i class="fa fa-eye mr-1"></i><span id="mViews">0</span> views</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <span id="mYearLabel" class="bg-red-600 text-white px-3 py-1 rounded-lg font-black text-xs uppercase">2024</span>
+                <span id="mQualLabel" class="bg-white text-black px-3 py-1 rounded-lg font-black text-xs uppercase">4K</span>
+                <span id="mAudioLabel" class="bg-zinc-800 text-gray-400 px-3 py-1 rounded-lg font-black text-xs uppercase">Hindi</span>
+                <span id="mGenreLabel" class="bg-zinc-800 text-blue-400 px-3 py-1 rounded-lg font-black text-xs uppercase"></span>
+            </div>
+            <p id="mDesc" class="text-gray-400 text-xs leading-relaxed mb-4"></p>
+            <div id="trailerSection" class="mb-3 hidden">
+                <button class="w-full flex-c gap-2 bg-gradient-to-r from-red-700 to-red-600 text-white py-3 rounded-xl font-black text-xs uppercase" onclick="playTrailer()"><i class="fa-brands fa-youtube"></i>Watch Trailer</button>
+            </div>
+            <p class="text-xs font-black uppercase mb-2" style="color:#666;">Select Quality</p>
+            <div id="movieBox" class="grid grid-cols-2 gap-2 mb-3"></div>
+            <div id="seriesBox" class="space-y-3 mb-3 hidden"></div>
+            <div class="mb-4">
+                <p class="text-xs font-black uppercase mb-2" style="color:#666;">Rate This Movie</p>
+                <div class="flex gap-2 justify-center">
+                    <button onclick="rateMovie(1)" class="star-btn text-2xl opacity-40">★</button>
+                    <button onclick="rateMovie(2)" class="star-btn text-2xl opacity-40">★</button>
+                    <button onclick="rateMovie(3)" class="star-btn text-2xl opacity-40">★</button>
+                    <button onclick="rateMovie(4)" class="star-btn text-2xl opacity-40">★</button>
+                    <button onclick="rateMovie(5)" class="star-btn text-2xl opacity-40">★</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mb-4">
+                <button onclick="reportBrokenLink()" class="bg-zinc-800 py-3 rounded-xl font-black text-xs uppercase flex-c gap-1 hover:bg-red-600 transition"><i class="fa fa-exclamation-triangle text-xs"></i>Report</button>
+                <button onclick="toggleComingSoonReminder()" class="bg-zinc-800 py-3 rounded-xl font-black text-xs uppercase flex-c gap-1 hover:bg-blue-600 transition"><i class="fa fa-bell text-xs"></i>Remind</button>
+                <button onclick="addMovieToDiary()" class="bg-zinc-800 py-3 rounded-xl font-black text-xs uppercase flex-c gap-1 hover:bg-green-600 transition"><i class="fa fa-book text-xs"></i>Diary</button>
+            </div>
+            <div id="relatedSection" class="mb-4">
+                <p class="text-xs font-black uppercase mb-2" style="color:#666;">Related Movies</p>
+                <div class="related-scroll no-scrollbar" id="relatedGrid"></div>
+            </div>
+            <div class="mb-4">
+                <p class="text-xs font-black uppercase mb-2" style="color:#666;">Reviews & Comments</p>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="commentInput" placeholder="Write your review..." class="pill-input flex-1" style="margin-bottom:0;">
+                    <button onclick="submitComment()" style="background:var(--primary);color:white;border:none;border-radius:10px;padding:0 16px;font-weight:900;font-size:11px;cursor:pointer;white-space:nowrap;">Post</button>
+                </div>
+                <div id="commentsList"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== LONG PRESS CONTEXT MENU ===== -->
+<div id="ctxMenu" class="ctx-menu">
+    <div class="ctx-item" onclick="ctxAction('open')"><i class="fa fa-play-circle" style="color:var(--primary);width:16px;"></i>Open Movie</div>
+    <div class="ctx-item" onclick="ctxAction('wishlist')"><i class="fa fa-heart" style="color:#ff4444;width:16px;"></i>Add to Wishlist</div>
+    <div class="ctx-item" onclick="ctxAction('download')"><i class="fa fa-download" style="color:var(--accent);width:16px;"></i>Download</div>
+    <div class="ctx-item" onclick="ctxAction('diary')"><i class="fa fa-book" style="color:#00cc44;width:16px;"></i>Add to Diary</div>
+    <div class="ctx-item" onclick="ctxAction('share')"><i class="fa fa-share" style="color:#ff8c00;width:16px;"></i>Share Movie</div>
+    <div class="ctx-item" onclick="ctxAction('dedicate')"><i class="fa fa-gift" style="color:#ffd700;width:16px;"></i>Dedicate to Friend</div>
+</div>
+
+<!-- ===== PWA PROMPT ===== -->
+<div id="pwaPrompt" style="position:fixed;bottom:88px;left:14px;right:14px;background:linear-gradient(135deg,#1a1a2e,#0f3460);border:1px solid rgba(0,212,255,0.3);border-radius:14px;padding:14px;z-index:2999;display:none;align-items:center;gap:10px;">
+    <div style="font-size:24px;">📱</div>
+    <div class="flex-1"><p style="font-weight:900;font-size:12px;">Install Movies 5U</p><p style="font-size:10px;color:#888;">Add to Home Screen</p></div>
+    <button onclick="installPWA()" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:8px 12px;font-weight:900;font-size:10px;cursor:pointer;">Install</button>
+    <button onclick="this.parentElement.style.display='none'" style="background:none;border:none;color:#666;cursor:pointer;font-size:14px;">✕</button>
+</div>
+
+<!-- ===== ALL MODALS ===== -->
+
+<!-- LANGUAGE -->
+<div id="langModal" class="modal" onclick="event.target===this&&closeModal('langModal')">
+    <div class="modal-content" style="max-width:300px;">
+        <div class="modal-header"><p class="modal-title">Select Language</p><button class="modal-close" onclick="closeModal('langModal')">✕</button></div>
+        <button onclick="setLanguage('hi')" class="w-full py-4 rounded-2xl font-black uppercase mb-2 text-white" style="background:linear-gradient(135deg,#e50914,#b20710);">🇮🇳 हिंदी</button>
+        <button onclick="setLanguage('en')" class="w-full py-4 rounded-2xl font-black uppercase text-white" style="background:linear-gradient(135deg,#1a56db,#0d3a8a);">🇺🇸 English</button>
+    </div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div id="notifModal" class="modal" onclick="event.target===this&&closeModal('notifModal')">
+    <div class="modal-content">
+        <div class="modal-header">
+            <p class="modal-title">🔔 Notifications</p>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <button onclick="markAllNotificationsRead()" style="background:none;border:none;color:var(--primary);font-size:10px;font-weight:900;cursor:pointer;white-space:nowrap;">Mark All Read</button>
+                <button class="modal-close" onclick="closeModal('notifModal')">✕</button>
+            </div>
+        </div>
+        <div id="notifList" style="max-height:400px;overflow-y:auto;"></div>
+    </div>
+</div>
+
+<!-- MOVIE REQUEST -->
+<div id="requestModal" class="modal" onclick="event.target===this&&closeModal('requestModal')">
+    <div class="modal-content" style="max-width:360px;">
+        <div class="modal-header"><p class="modal-title">📝 Request Movie</p><button class="modal-close" onclick="closeModal('requestModal')">✕</button></div>
+        <input type="text" id="reqMovieName" class="pill-input" placeholder="Movie / Series name *">
+        <input type="text" id="reqYear" class="pill-input" placeholder="Year (optional)">
+        <select id="reqLang" class="pill-input"><option value="">Language preference</option><option>Hindi</option><option>English</option><option>Tamil</option><option>Telugu</option><option>Malayalam</option></select>
+        <textarea id="reqNote" class="pill-input" rows="2" placeholder="Any extra details..."></textarea>
+        <button onclick="submitRequest()" class="w-full py-3 rounded-xl font-black text-sm uppercase text-white mb-2" style="background:var(--primary);border:none;cursor:pointer;">Submit Request +15pts</button>
+        <button onclick="closeModal('requestModal')" style="width:100%;background:none;border:none;color:#666;font-weight:800;font-size:12px;cursor:pointer;padding:8px;">Cancel</button>
+    </div>
+</div>
+
+<!-- EMOJI PICKER -->
+<div id="emojiPickerModal" class="modal" onclick="event.target===this&&closeModal('emojiPickerModal')">
+    <div class="modal-content" style="max-width:340px;">
+        <div class="modal-header"><p class="modal-title">🎨 Choose Avatar</p><button class="modal-close" onclick="closeModal('emojiPickerModal')">✕</button></div>
+        <p style="font-size:11px;color:#888;text-align:center;margin-bottom:4px;">Apna profile avatar select karo</p>
+        <div class="emoji-grid" id="emojiGrid"></div>
+        <button onclick="saveEmoji()" class="w-full py-3 rounded-xl font-black text-sm uppercase text-white mt-4" style="background:var(--primary);border:none;cursor:pointer;">Save Avatar</button>
+    </div>
+</div>
+
+<!-- NAME EDIT -->
+<div id="nameEditModal" class="modal" onclick="event.target===this&&closeModal('nameEditModal')">
+    <div class="modal-content" style="max-width:340px;">
+        <div class="modal-header"><p class="modal-title">✏️ Edit Name</p><button class="modal-close" onclick="closeModal('nameEditModal')">✕</button></div>
+        <input type="text" id="nameEditInput" class="pill-input" placeholder="Apna naam likho..." maxlength="20">
+        <button onclick="saveName()" class="w-full py-3 rounded-xl font-black text-sm uppercase text-white" style="background:var(--primary);border:none;cursor:pointer;">Save Name</button>
+    </div>
+</div>
+
+<!-- APP UPDATE MODAL -->
+<div id="appUpdateModal" class="modal" onclick="event.target===this&&closeModal('appUpdateModal')">
+    <div class="modal-content" style="max-width:360px;text-align:center;">
+        <div class="modal-header"><p class="modal-title" id="updateTitle">App Update</p><button class="modal-close" onclick="closeModal('appUpdateModal')">✕</button></div>
+        <div style="font-size:60px;margin-bottom:12px;">🚀</div>
+        <p style="font-size:13px;color:#888;margin-bottom:16px;" id="updateDesc">Checking version...</p>
+        <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:14px;margin-bottom:16px;text-align:left;">
+            <p style="font-size:10px;font-weight:900;text-transform:uppercase;color:#555;margin-bottom:8px;">What's New</p>
+            <p style="font-size:11px;color:#ccc;margin-bottom:4px;" id="updateNote1">• Improved performance</p>
+            <p style="font-size:11px;color:#ccc;margin-bottom:4px;" id="updateNote2">• New features added</p>
+            <p style="font-size:11px;color:#ccc;" id="updateNote3">• Bug fixes</p>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-bottom:12px;">
+            <div style="text-align:center;"><p style="font-size:10px;color:#555;font-weight:800;">Current</p><p style="font-size:16px;font-weight:900;" id="currentVer">1.0.0</p></div>
+            <div style="font-size:20px;color:#555;">→</div>
+            <div style="text-align:center;"><p style="font-size:10px;color:var(--accent);font-weight:800;">Latest</p><p style="font-size:16px;font-weight:900;color:var(--accent);" id="newVer">1.0.0</p></div>
+        </div>
+        <button onclick="installAppUpdate()" class="w-full py-3 rounded-xl font-black text-sm uppercase text-white" style="background:linear-gradient(135deg,var(--accent),#0072ff);border:none;cursor:pointer;"><i class="fa fa-download mr-2"></i>Install Update</button>
+    </div>
+</div>
+
+<!-- WORLD MAP -->
+<div id="worldMapModal" class="modal" onclick="event.target===this&&closeModal('worldMapModal')">
+    <div class="modal-content">
+        <div class="modal-header"><p class="modal-title">🗺️ Movie World Map</p><button class="modal-close" onclick="closeModal('worldMapModal')">✕</button></div>
+        <p style="font-size:11px;color:#888;margin-bottom:14px;text-align:center;">Har desh ki movie dekho aur unlock karo!</p>
+        <div class="world-map-grid" id="worldMapGrid"></div>
+    </div>
+</div>
+
+<!-- YEARLY WRAPPED -->
+<div id="wrappedModal" class="modal" onclick="event.target===this&&closeModal('wrappedModal')">
+    <div class="modal-content" style="max-width:360px;text-align:center;">
+        <div class="modal-header"><p class="modal-title" style="color:var(--primary);">🎬 Your Yearly Wrapped</p><button class="modal-close" onclick="closeModal('wrappedModal')">✕</button></div>
+        <div id="wrappedContent"></div>
+    </div>
+</div>
+
+<!-- KIDS PIN -->
+<div id="kidsPinModal" class="modal" onclick="event.target===this&&closeModal('kidsPinModal')">
+    <div class="modal-content" style="max-width:300px;text-align:center;">
+        <div class="modal-header"><p class="modal-title">🔐 Kids PIN</p><button class="modal-close" onclick="closeModal('kidsPinModal')">✕</button></div>
+        <p style="font-size:11px;color:#888;margin-bottom:16px;" id="pinModalDesc">Enter 4-digit PIN</p>
+        <div class="flex gap-2 justify-center mb-5">
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;" id="pd0">•</div>
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;" id="pd1">•</div>
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;" id="pd2">•</div>
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,0.05);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;" id="pd3">•</div>
+        </div>
+        <div class="grid grid-cols-3 gap-2" id="pinKeypad"></div>
+    </div>
+</div>
+
+<!-- TRAILER -->
+<div id="trailerModal" class="modal" onclick="event.target===this&&closeModal('trailerModal')">
+    <div class="modal-content" style="padding:0;border-radius:18px;overflow:hidden;max-width:500px;">
+        <div style="position:relative;"><button onclick="closeModal('trailerModal')" style="position:absolute;top:10px;right:10px;z-index:5;background:rgba(0,0,0,0.8);border:none;color:white;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;">✕</button><div id="trailerFrame" style="width:100%;aspect-ratio:16/9;background:#000;"></div></div>
+        <div style="padding:14px;"><p style="font-weight:900;font-size:13px;" id="trailerTitle">Trailer</p></div>
+    </div>
+</div>
+
+<!-- CHAI BREAK -->
+<div id="chaiModal" class="modal" onclick="event.target===this&&closeModal('chaiModal')">
+    <div class="modal-content" style="max-width:340px;text-align:center;">
+        <div class="modal-header"><p class="modal-title">☕ Chai Break!</p><button class="modal-close" onclick="closeModal('chaiModal')">✕</button></div>
+        <div id="chaiTimer" style="font-size:52px;font-weight:900;color:var(--primary);margin:10px 0;">15:00</div>
+        <div class="flex gap-3 justify-center mb-4">
+            <button onclick="startChaiTimer(15)" class="spin-btn" style="padding:10px 20px;font-size:11px;">15 min</button>
+            <button onclick="startChaiTimer(30)" class="spin-btn" style="padding:10px 20px;font-size:11px;">30 min</button>
+            <button onclick="stopChaiTimer()" style="background:rgba(255,255,255,0.1);color:white;border:none;border-radius:30px;padding:10px 20px;font-weight:900;font-size:11px;cursor:pointer;">Stop</button>
+        </div>
+        <div style="text-align:left;">
+            <p style="font-size:11px;font-weight:900;color:#ffc107;text-transform:uppercase;margin-bottom:8px;">☕ Perfect Chai Recipe</p>
+            <div class="chai-recipe-item">1. Pani 1 cup — boil karo</div>
+            <div class="chai-recipe-item">2. Chai patti 1 tsp dalo</div>
+            <div class="chai-recipe-item">3. Adrak + elaichi — crush karo</div>
+            <div class="chai-recipe-item">4. Doodh 1/2 cup milao</div>
+            <div class="chai-recipe-item">5. Cheeni — taste ke hisab se</div>
+            <div class="chai-recipe-item" style="border-bottom:none;">6. Chai taiyar! ☕</div>
+        </div>
+    </div>
+</div>
+
+<!-- CINEMA CARD -->
+<div id="cinemaCardModal" class="modal" onclick="event.target===this&&closeModal('cinemaCardModal')">
+    <div class="modal-content" style="max-width:360px;text-align:center;">
+        <div class="modal-header"><p class="modal-title">📸 Cinema Card</p><button class="modal-close" onclick="closeModal('cinemaCardModal')">✕</button></div>
+        <div id="cinemaCard" style="margin-bottom:14px;"></div>
+        <button onclick="shareCinemaCard()" class="w-full py-3 rounded-xl font-black text-sm uppercase text-white" style="background:var(--primary);border:none;cursor:pointer;"><i class="fa fa-share mr-2"></i>Share Card</button>
+    </div>
+</div>
+
+<!-- EMOTION MATCHER -->
+<div id="emotionModal" class="modal" onclick="event.target===this&&closeModal('emotionModal')">
+    <div class="modal-content" style="max-width:360px;">
+        <div class="modal-header"><p class="modal-title">😊 Aaj Ka Mood?</p><button class="modal-close" onclick="closeModal('emotionModal')">✕</button></div>
+        <p style="font-size:11px;color:#888;text-align:center;margin-bottom:16px;">Apna mood select karo!</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+            <div class="emotion-card" onclick="emotionFilter('Happy')"><div class="emotion-emoji">😄</div><div class="emotion-label">Happy</div></div>
+            <div class="emotion-card" onclick="emotionFilter('Sad')"><div class="emotion-emoji">😢</div><div class="emotion-label">Sad</div></div>
+            <div class="emotion-card" onclick="emotionFilter('Excited')"><div class="emotion-emoji">🤩</div><div class="emotion-label">Excited</div></div>
+            <div class="emotion-card" onclick="emotionFilter('Bored')"><div class="emotion-emoji">😴</div><div class="emotion-label">Bored</div></div>
+            <div class="emotion-card" onclick="emotionFilter('Scared')"><div class="emotion-emoji">😱</div><div class="emotion-label">Scared?</div></div>
+            <div class="emotion-card" onclick="emotionFilter('Romantic')"><div class="emotion-emoji">💕</div><div class="emotion-label">Romantic</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- DEDICATE MOVIE -->
+<div id="dedicateModal" class="modal" onclick="event.target===this&&closeModal('dedicateModal')">
+    <div class="modal-content" style="max-width:340px;">
+        <div class="modal-header"><p class="modal-title">🎁 Dedicate Movie</p><button class="modal-close" onclick="closeModal('dedicateModal')">✕</button></div>
+        <input type="text" id="dedicateTo" class="pill-input" placeholder="Friend's name">
+        <textarea id="dedicateMsg" class="pill-input" rows="2" placeholder="Personal message..."></textarea>
+        <button onclick="sendDedication()" class="w-full py-3 rounded-xl font-black text-sm uppercase text-white mb-2" style="background:var(--primary);border:none;cursor:pointer;"><i class="fa fa-heart mr-2"></i>Dedicate & Share</button>
+    </div>
+</div>
+
+<!-- ADD TO DIARY -->
+<div id="diaryAddModal" class="modal" onclick="event.target===this&&closeModal('diaryAddModal')">
+    <div class="modal-content" style="max-width:340px;">
+        <div class="modal-header"><p class="modal-title">📖 Movie Diary</p><button class="modal-close" onclick="closeModal('diaryAddModal')">✕</button></div>
+        <p style="font-size:11px;color:#888;margin-bottom:4px;">Movie: <span id="diaryMovieTitle" style="color:var(--primary);font-weight:900;"></span></p>
+        <div class="flex gap-2 flex-wrap mb-3 mt-3">
+            <span style="font-size:11px;font-weight:800;color:#888;align-self:center;">Mood:</span>
+            <button class="mood-btn" style="padding:6px 12px;font-size:12px;" onclick="selectDiaryMood('😊',this)">😊</button>
+            <button class="mood-btn" style="padding:6px 12px;font-size:12px;" onclick="selectDiaryMood('😢',this)">😢</button>
+            <button class="mood-btn" style="padding:6px 12px;font-size:12px;" onclick="selectDiaryMood('😍',this)">😍</button>
+            <button class="mood-btn" style="padding:6px 12px;font-size:12px;" onclick="selectDiaryMood('😲',this)">😲</button>
+            <button class="mood-btn" style="padding:6px 12px;font-size:12px;" onclick="selectDiaryMood('🤣',this)">🤣</button>
+        </div>
+        <textarea id="diaryNote" class="pill-input" rows="3" placeholder="Apna experience likho..."></textarea>
+        <button onclick="saveDiaryEntry()" class="w-full py-3 rounded-xl font-black text-sm uppercase text-white" style="background:var(--primary);border:none;cursor:pointer;"><i class="fa fa-save mr-2"></i>Save to Diary</button>
+    </div>
+</div>
+
+<!-- RANDOM MOVIE MODAL -->
+<div id="randomModal" class="modal" onclick="event.target===this&&closeModal('randomModal')">
+    <div class="modal-content" style="max-width:320px;text-align:center;">
+        <div class="modal-header"><p class="modal-title">🎲 Surprise Movie!</p><button class="modal-close" onclick="closeModal('randomModal')">✕</button></div>
+        <div id="randomMovieContent"></div>
+        <div class="flex gap-2 mt-4">
+            <button onclick="shakeRandom()" class="flex-1 py-3 rounded-xl font-black text-xs uppercase text-white" style="background:rgba(255,255,255,0.1);border:none;cursor:pointer;">🎲 Another!</button>
+            <button id="randomWatchBtn" class="flex-1 py-3 rounded-xl font-black text-xs uppercase text-white" style="background:var(--primary);border:none;cursor:pointer;">Watch Now!</button>
+        </div>
+    </div>
+</div>
+
+<!-- HOW TO WATCH -->
+<div id="howToWatchModal" class="modal" onclick="event.target===this&&closeModal('howToWatchModal')">
+    <div class="modal-content" style="max-width:400px;">
+        <div class="modal-header"><p class="modal-title">▶️ How to Watch</p><button class="modal-close" onclick="closeModal('howToWatchModal')">✕</button></div>
+        <div style="space-y:8px;">
+            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;margin-bottom:8px;"><p style="font-weight:900;font-size:12px;margin-bottom:4px;color:var(--accent);">Step 1 — Movie Select Karo</p><p style="font-size:11px;color:#888;">Home page se koi bhi movie select karo</p></div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;margin-bottom:8px;"><p style="font-weight:900;font-size:12px;margin-bottom:4px;color:var(--accent);">Step 2 — Quality Choose Karo</p><p style="font-size:11px;color:#888;">480p se 4K tak available hai</p></div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;"><p style="font-weight:900;font-size:12px;margin-bottom:4px;color:var(--accent);">Step 3 — PlayerJet Use Karo</p><p style="font-size:11px;color:#888;">Best experience ke liye PlayerJet app use karo</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, onSnapshot, query, orderBy, doc, getDoc, setDoc, addDoc, increment, updateDoc, arrayUnion, arrayRemove, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = { apiKey:"AIzaSyAWTbD-FW3YPEmhf4Ga4Jwd3qNw5x7s2_Q", projectId:"movies5uapp" };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ===== GLOBALS =====
+const CURRENT_APP_VERSION = "1.0.0";
+let master=[], currentMovie=null, userId=localStorage.getItem('m5u_uid'), currentLang=localStorage.getItem('m5u_lang')||'en';
+let userWatchlist=[], userHistory=[], currentPage='home', userLevel=1, userPoints=0;
+let kidsMode=localStorage.getItem('m5u_kids')==='true';
+let nightOwl=localStorage.getItem('m5u_nightowl')==='true';
+let ghostMode=localStorage.getItem('m5u_ghost')==='true';
+let downloadQueue=JSON.parse(localStorage.getItem('m5u_downloads')||'[]');
+let pwaInstallEvent=null, pinBuffer=[], pinMode='', settings=JSON.parse(localStorage.getItem('m5u_settings')||'{}');
+let userStreak=0, chaiInterval=null, ctxMovieId=null, selectedDiaryMood='😊';
+let sessionStartTime=Date.now(), hatTapCount=0, konami=[], konamiCode=[38,38,40,40,37,39,37,39,66,65];
+let selectedEmoji = localStorage.getItem('m5u_emoji') || '🎬';
+let pendingEmoji = selectedEmoji;
+let notifications = JSON.parse(localStorage.getItem('m5u_notifications') || '[]');
+let latestAppVersion = CURRENT_APP_VERSION;
+let hasUpdate = false;
+
+// ===== APPLY SAVED SETTINGS =====
+if(localStorage.getItem('m5u_theme')==='light') document.body.classList.add('light-mode');
+if(nightOwl) document.body.classList.add('night-owl');
+if(ghostMode) { document.getElementById('ghostIcon').style.color='var(--accent)'; document.getElementById('ghostBanner').classList.add('show'); }
+
+// ===== PARTICLES =====
+function initParticles() {
+    const c = document.getElementById('particles');
+    for(let i=0;i<20;i++) {
+        const p=document.createElement('div'); p.className='particle';
+        p.style.left=Math.random()*100+'vw';
+        p.style.animationDuration=(10+Math.random()*15)+'s';
+        p.style.animationDelay=Math.random()*12+'s';
+        p.style.width=p.style.height=(1+Math.random()*2)+'px';
+        p.style.opacity=Math.random()*0.4;
+        c.appendChild(p);
+    }
+}
+initParticles();
+
+// ===== FESTIVAL MODE =====
+function checkFestivalMode() {
+    const now=new Date(), m=now.getMonth()+1, d=now.getDate();
+    if(m===10&&d>=20&&d<=26) { document.body.classList.add('festival-diwali'); showToast('🪔 Diwali Special Mode!'); }
+    else if(m===3&&d>=20&&d<=26) { document.body.classList.add('festival-holi'); showToast('🎨 Holi Mode! Rang barse!'); }
+    else if(m===12&&d>=24&&d<=26) { document.body.classList.add('festival-christmas'); showToast('🎄 Merry Christmas Mode!'); }
+}
+checkFestivalMode();
+
+// ===== NIGHT OWL AUTO =====
+function checkNightOwl() {
+    const h=new Date().getHours();
+    if((h>=23||h<5)&&!nightOwl) { document.body.classList.add('night-owl'); }
+}
+checkNightOwl();
+
+// ===== BIRTHDAY CHECK =====
+function checkBirthday() {
+    const bd=settings.birthday; if(!bd) return;
+    const now=new Date(), bDate=new Date(bd);
+    if(now.getMonth()===bDate.getMonth()&&now.getDate()===bDate.getDate()) {
+        const claimed=localStorage.getItem('m5u_bdClaimed')===now.getFullYear().toString();
+        if(!claimed) { setTimeout(()=>{ document.getElementById('birthdayBanner').classList.add('show'); launchConfetti(); localStorage.setItem('m5u_bdClaimed',now.getFullYear().toString()); },3000); }
+    }
+}
+
+// ===== SCREEN TIME =====
+setInterval(()=>{
+    if(settings.screenTime===false) return;
+    const mins=Math.floor((Date.now()-sessionStartTime)/60000);
+    if(mins>=120&&mins%30===0) {
+        document.getElementById('screenTimeBar').classList.add('show');
+        document.getElementById('screenTimeMsg').innerText=`Aap ${mins} minutes se dekh rahe ho! Break lo 🙏`;
+    }
+},60000);
+
+// ===== KONAMI CODE =====
+document.addEventListener('keydown',e=>{ konami.push(e.keyCode); konami=konami.slice(-10); if(konami.join(',')===konamiCode.join(',')) { showToast('🥚 Easter Egg! Secret Collection!'); launchConfetti(); } });
+
+// ===== MAGIC HAT =====
+let hatTimer;
+window.logoTapCount=()=>{
+    hatTapCount++; clearTimeout(hatTimer);
+    hatTimer=setTimeout(()=>hatTapCount=0,3000);
+    if(hatTapCount>=10) { hatTapCount=0; launchConfetti(); showToast('🎩 Magic Hat! +100pts'); userPoints+=100; updateProfileDisplay(); }
+};
+
+// ===== SHAKE TO RANDOM =====
+window.addEventListener('devicemotion',e=>{
+    const acc=e.accelerationIncludingGravity;
+    if(acc&&(Math.abs(acc.x)>15||Math.abs(acc.y)>15||Math.abs(acc.z)>15)) { clearTimeout(window._shakeTimeout); window._shakeTimeout=setTimeout(()=>shakeRandom(),500); }
+});
+window.shakeRandom=()=>{
+    if(!master.length) return;
+    const r=master[Math.floor(Math.random()*master.length)];
+    document.getElementById('randomMovieContent').innerHTML=`<img src="${r.poster}" style="width:120px;height:180px;object-fit:cover;object-position:center top;border-radius:12px;margin:0 auto 10px;display:block;"><p style="font-weight:900;font-size:15px;text-transform:uppercase;margin-bottom:4px;">${r.title}</p><p style="font-size:11px;color:#888;">${r.year||'2024'} • ${r.category||'Movie'}</p>`;
+    document.getElementById('randomWatchBtn').onclick=()=>{ closeModal('randomModal'); openDetails(r.id); };
+    openModal('randomModal');
+};
+
+// ===== CHECK APP UPDATE (FIREBASE) =====
+async function checkAppUpdateFromFirebase() {
+    try {
+        const cfgDoc = await getDoc(doc(db,"system","app_config"));
+        if(cfgDoc.exists()) {
+            const data = cfgDoc.data();
+            latestAppVersion = data.latestVersion || CURRENT_APP_VERSION;
+            const notes = data.updateNotes || ["Improved performance","New features","Bug fixes"];
+            document.getElementById('currentVer').innerText = CURRENT_APP_VERSION;
+            document.getElementById('newVer').innerText = latestAppVersion;
+            if(notes[0]) document.getElementById('updateNote1').innerText = '• '+notes[0];
+            if(notes[1]) document.getElementById('updateNote2').innerText = '• '+notes[1];
+            if(notes[2]) document.getElementById('updateNote3').innerText = '• '+notes[2];
+
+            if(latestAppVersion !== CURRENT_APP_VERSION) {
+                hasUpdate = true;
+                // Show home popup
+                document.getElementById('popupNewVer').innerText = latestAppVersion;
+                document.getElementById('appUpdatePopup').classList.add('show');
+                // Highlight profile button
+                const btn = document.getElementById('profileUpdateBtn');
+                if(btn) { btn.classList.add('update-highlight'); btn.classList.add('update-ring'); }
+                document.getElementById('profileUpdateDot').style.display = 'block';
+                document.getElementById('profileUpdateBadge').innerText = 'UPDATE';
+                document.getElementById('profileUpdateBadge').style.background = 'rgba(229,9,20,0.2)';
+                document.getElementById('profileUpdateBadge').style.color = 'var(--primary)';
+                document.getElementById('profileUpdateStatus').innerText = `New version ${latestAppVersion} available! 🔄`;
+                document.getElementById('updateTitle').innerText = 'New Version Available! 🚀';
+                document.getElementById('updateDesc').innerText = `Update ${CURRENT_APP_VERSION} → ${latestAppVersion}`;
+                // Add notification
+                addNotification('🔄 App Update Available!', `Version ${latestAppVersion} ready. Tap to update.`, 'update');
+            } else {
+                document.getElementById('updateTitle').innerText = 'All Updated! ✅';
+                document.getElementById('updateDesc').innerText = `You are running the latest version (${CURRENT_APP_VERSION})`;
+            }
+        }
+    } catch(e) { console.log('No update config in Firebase'); }
+}
+
+// ===== ADD NOTIFICATION =====
+function addNotification(title, body, type='info') {
+    const id = Date.now();
+    notifications.unshift({ id, title, body, type, read: false, time: Date.now() });
+    localStorage.setItem('m5u_notifications', JSON.stringify(notifications));
+    updateNotifDot();
+}
+
+function updateNotifDot() {
+    const unread = notifications.filter(n=>!n.read).length;
+    const dot = document.getElementById('nDot');
+    if(dot) dot.style.display = unread > 0 ? 'block' : 'none';
+}
+
+window.openNotifications = () => {
+    const list = document.getElementById('notifList');
+    if(!notifications.length) {
+        list.innerHTML = '<div style="text-align:center;padding:30px;color:#555;"><div style="font-size:40px;margin-bottom:8px;">🔔</div><p>No notifications yet</p></div>';
+    } else {
+        list.innerHTML = notifications.map(n => {
+            const icons = { update:'🔄', info:'ℹ️', movie:'🎬', reward:'🎁' };
+            const bg = { update:'rgba(0,212,255,0.1)', info:'rgba(255,255,255,0.05)', movie:'rgba(229,9,20,0.1)', reward:'rgba(255,215,0,0.1)' };
+            return `<div class="notif-item ${n.read?'':'unread'}" id="notif-${n.id}">
+                <div class="notif-icon" style="background:${bg[n.type]||bg.info};">${icons[n.type]||'🔔'}</div>
+                <div style="flex:1;">
+                    <p style="font-weight:900;font-size:12px;">${n.title}</p>
+                    <p style="font-size:10px;color:#888;margin-top:2px;">${n.body}</p>
+                    <p style="font-size:9px;color:#444;margin-top:2px;">${new Date(n.time).toLocaleString()}</p>
+                </div>
+                <button class="notif-read-btn" onclick="dismissNotification(${n.id})">✕</button>
+            </div>`;
+        }).join('');
+    }
+    openModal('notifModal');
+};
+
+window.dismissNotification = (id) => {
+    notifications = notifications.filter(n => n.id !== id);
+    localStorage.setItem('m5u_notifications', JSON.stringify(notifications));
+    updateNotifDot();
+    const el = document.getElementById('notif-'+id);
+    if(el) { el.style.opacity='0'; el.style.transform='translateX(50px)'; setTimeout(()=>el.remove(), 300); }
+    if(!notifications.length) { document.getElementById('notifList').innerHTML='<div style="text-align:center;padding:30px;color:#555;"><div style="font-size:40px;margin-bottom:8px;">✅</div><p>All notifications cleared!</p></div>'; }
+};
+
+window.markAllNotificationsRead = () => {
+    notifications = notifications.map(n => ({...n, read: true}));
+    localStorage.setItem('m5u_notifications', JSON.stringify(notifications));
+    updateNotifDot();
+    openNotifications();
+};
+
+// ===== EMOJI PICKER =====
+const profileEmojis = ['🎬','🎭','🎪','🎮','🎸','🦁','🐯','🦊','🐻','🌟','⚡','🔥','💎','👑','🚀','🎯','🎨','🎲'];
+
+window.openEmojiPicker = () => {
+    pendingEmoji = selectedEmoji;
+    document.getElementById('emojiGrid').innerHTML = profileEmojis.map(e => `<div class="emoji-opt ${e===selectedEmoji?'selected':''}" onclick="selectEmoji('${e}',this)">${e}</div>`).join('');
+    openModal('emojiPickerModal');
+};
+
+window.selectEmoji = (emoji, el) => {
+    document.querySelectorAll('.emoji-opt').forEach(e=>e.classList.remove('selected'));
+    el.classList.add('selected');
+    pendingEmoji = emoji;
+};
+
+window.saveEmoji = () => {
+    selectedEmoji = pendingEmoji;
+    localStorage.setItem('m5u_emoji', selectedEmoji);
+    document.getElementById('avatarEmoji').innerText = selectedEmoji;
+    closeModal('emojiPickerModal');
+    showToast('Avatar updated! ' + selectedEmoji);
+};
+
+// ===== NAME EDIT =====
+window.openNameEdit = () => {
+    const currentName = document.getElementById('uNameDisplay').innerText;
+    document.getElementById('nameEditInput').value = currentName === 'USER' ? '' : currentName;
+    openModal('nameEditModal');
+};
+
+window.saveName = () => {
+    const name = document.getElementById('nameEditInput').value.trim();
+    if(!name) { showToast('Naam khaali nahi ho sakta!'); return; }
+    localStorage.setItem('m5u_customName', name);
+    document.getElementById('uNameDisplay').innerText = name;
+    document.getElementById('avatarEmoji').innerText = selectedEmoji;
+    closeModal('nameEditModal');
+    showToast('Naam save ho gaya! ✅');
+    // Update firebase
+    try { updateDoc(doc(db,"users",userId), {displayName: name}); } catch(e){}
+};
+
+// ===== INIT USER =====
+async function initUser() {
+    if(!userId) {
+        try {
+            const cRef=doc(db,"system","user_counter"), cSnap=await getDoc(cRef);
+            let n=(cSnap.exists()?(cSnap.data().count||0):0)+1;
+            userId='U'+String(n).padStart(5,'0');
+            localStorage.setItem('m5u_uid',userId);
+            await setDoc(cRef,{count:n},{merge:true});
+        } catch(e) { userId='U'+Math.floor(Math.random()*99999); localStorage.setItem('m5u_uid',userId); }
+    }
+
+    const customName = localStorage.getItem('m5u_customName');
+    const name = customName || ("USER_"+userId.slice(-5));
+    document.getElementById('uNameDisplay').innerText = name;
+    document.getElementById('avatarEmoji').innerText = selectedEmoji;
+    document.getElementById('settingsUserId').innerText = userId;
+    if(document.getElementById('settingsUserIdSub')) document.getElementById('settingsUserIdSub').innerText = userId;
+
+    try {
+        const uRef=doc(db,"users",userId), uSnap=await getDoc(uRef);
+        if(!uSnap.exists()) {
+            await setDoc(uRef,{status:'active',joinDate:new Date().toLocaleDateString(),watchlist:[],history:[],ratings:{},level:1,points:0,streak:0,displayName:name});
+        } else {
+            const d=uSnap.data();
+            userWatchlist=d.watchlist||[]; userHistory=d.history||[];
+            userLevel=d.level||1; userPoints=d.points||0; userStreak=d.streak||0;
+            if(d.displayName && !customName) {
+                localStorage.setItem('m5u_customName', d.displayName);
+                document.getElementById('uNameDisplay').innerText = d.displayName;
+            }
+        }
+    } catch(e) { console.log('Firebase user init error:', e); }
+
+    updateProfileDisplay(); loadSettings(); updateNotifDot();
+    checkBirthday();
+    if(settings.birthday) document.getElementById('birthdayInput').value=settings.birthday;
+
+    // Apply toggle states
+    if(kidsMode) document.getElementById('kidsModeToggle').classList.add('on');
+    if(nightOwl) document.getElementById('nightOwlToggle').classList.add('on');
+
+    // Check for app updates
+    await checkAppUpdateFromFirebase();
+}
+
+// ===== PROFILE DISPLAY =====
+function updateProfileDisplay() {
+    const xp=userPoints%100;
+    document.getElementById('userLevelText').innerText=`Level ${userLevel} • ${userPoints} Points`;
+    document.getElementById('wishlistCount').innerText=userWatchlist.length;
+    document.getElementById('hoursWatched').innerText=Math.floor(userHistory.length*1.5);
+    document.getElementById('userPointsDisp').innerText=userPoints;
+    document.getElementById('streakDisp').innerText=userStreak+'🔥';
+    document.getElementById('xpBar').style.width=xp+'%';
+    document.getElementById('xpText').innerText=xp+'/100 XP to next level';
+}
+
+// ===== LOAD SETTINGS =====
+function loadSettings() {
+    ['dataSaver','notifNew','notifReq','history','screenTime'].forEach(k=>{
+        const el=document.getElementById(k+'Toggle');
+        if(el) el.classList.toggle('on',settings[k]!==false);
+    });
+    const ap=document.getElementById('autoPlayToggle'); if(ap) ap.classList.toggle('on',settings.autoPlay!==false);
+    if(settings.quality) document.getElementById('defQuality').value=settings.quality;
+}
+window.saveSetting=(k,v)=>{ settings[k]=v; localStorage.setItem('m5u_settings',JSON.stringify(settings)); };
+window.toggleSetting=(k,el)=>{ el.classList.toggle('on'); settings[k]=el.classList.contains('on'); localStorage.setItem('m5u_settings',JSON.stringify(settings)); };
+window.openSettings=()=>openPage('settingsPage');
+window.clearAllData=()=>{ if(confirm('All data clear hoga. Sure?')) { localStorage.clear(); location.reload(); } };
+
+// ===== APP UPDATE FUNCTIONS =====
+window.checkAppUpdate=()=>{
+    openModal('appUpdateModal');
+};
+window.installAppUpdate=()=>{
+    if(hasUpdate) {
+        showToast('✅ Updating to ' + latestAppVersion + '...');
+        localStorage.setItem('m5u_appVersion', latestAppVersion);
+        document.getElementById('appUpdatePopup').classList.remove('show');
+        setTimeout(()=>location.reload(), 2000);
+    } else {
+        showToast('✅ Already on latest version!');
+        setTimeout(()=>closeModal('appUpdateModal'), 1000);
+    }
+};
+
+// ===== THEME =====
+window.toggleTheme=()=>{ const c=localStorage.getItem('m5u_theme')||'dark', n=c==='dark'?'light':'dark'; localStorage.setItem('m5u_theme',n); document.body.classList.toggle('light-mode',n==='light'); showToast(n==='light'?'☀️ Light Mode':'🌙 Dark Mode'); };
+window.toggleNightOwl=()=>{ nightOwl=!nightOwl; localStorage.setItem('m5u_nightowl',nightOwl); document.body.classList.toggle('night-owl',nightOwl); showToast(nightOwl?'🌙 Night Owl ON':'🌙 Night Owl OFF'); };
+window.toggleNightOwlBtn=(el)=>{ el.classList.toggle('on'); nightOwl=el.classList.contains('on'); localStorage.setItem('m5u_nightowl',nightOwl); document.body.classList.toggle('night-owl',nightOwl); showToast(nightOwl?'🌙 Night Owl ON':'🌙 Night Owl OFF'); };
+window.toggleGhostMode=()=>{ ghostMode=!ghostMode; localStorage.setItem('m5u_ghost',ghostMode); document.getElementById('ghostIcon').style.color=ghostMode?'var(--accent)':'#555'; document.getElementById('ghostBanner').classList.toggle('show',ghostMode); showToast(ghostMode?'👻 Ghost Mode ON':'Ghost Mode OFF'); };
+window.toggleKidsMode=(el)=>{ el.classList.toggle('on'); kidsMode=el.classList.contains('on'); localStorage.setItem('m5u_kids',kidsMode); showToast(kidsMode?'👶 Kids Mode ON':'Kids Mode OFF'); if(master.length) renderGrid(master,'mainGrid'); };
+
+// ===== LANGUAGE =====
+window.setLanguage=(lang)=>{ currentLang=lang; localStorage.setItem('m5u_lang',lang); closeModal('langModal'); location.reload(); };
+window.openLanguageModal=()=>openModal('langModal');
+
+// ===== MODALS =====
+window.openModal=(id)=>document.getElementById(id)?.classList.add('active');
+window.closeModal=(id)=>document.getElementById(id)?.classList.remove('active');
+
+// ===== LOAD MOVIES =====
+function loadMovies() {
+    const q=query(collection(db,"movies_pro"),orderBy("time","desc"));
+    onSnapshot(q, snap => {
+        master=snap.docs.map(d=>({id:d.id,...d.data()}));
+        const years=[...new Set(master.map(m=>m.year).filter(y=>y))].sort((a,b)=>b-a);
+        const ys=document.getElementById('yearFilter');
+        years.forEach(yr=>{ if(!ys.querySelector(`option[value="${yr}"]`)) { const o=document.createElement('option'); o.value=yr; o.textContent=yr; ys.appendChild(o); } });
+        renderSkeletons();
+        setTimeout(()=>{
+            renderGrid(master,'mainGrid'); renderHero(); renderTrending(); renderComingSoon();
+            renderCategories(); loadContinueWatching(); loadWatchlistSection();
+            renderForYou(); renderOnThisDay(); updateTickerFromMovies();
+        },200);
+        document.getElementById('splash').style.display='none';
+        checkFirstTimeUser();
+    }, error => {
+        console.error("Firestore error:", error);
+        document.getElementById('splash').style.display='none';
+        showToast("⚠️ Firebase error. Check internet.");
+    });
+}
+
+// ===== SKELETON LOADING =====
+function renderSkeletons() {
+    const g=document.getElementById('mainGrid'); if(!g) return;
+    g.innerHTML=Array(9).fill(`<div class="skeleton-card skeleton"><div class="skeleton-poster skeleton"></div><div style="padding:8px;"><div class="skeleton-title skeleton"></div><div class="skeleton-meta skeleton"></div></div></div>`).join('');
+}
+
+// ===== RENDER GRID =====
+function renderGrid(data,gridId) {
+    const g=document.getElementById(gridId); if(!g) return;
+    if(kidsMode) data=data.filter(m=>!m.category18plus);
+    if(!data.length) { g.innerHTML='<div class="col-span-3 py-12 text-center text-gray-500" style="padding:40px 16px;"><i class="fa fa-inbox" style="font-size:36px;display:block;margin-bottom:10px;"></i><p style="font-size:12px;">No movies found</p></div>'; return; }
+    g.innerHTML=data.map((m,i)=>{
+        const langs=Array.isArray(m.audioLang)?m.audioLang:(m.audioLang?[m.audioLang]:['Hindi']);
+        const tagsHtml=langs.map((l,idx)=>`<span class="audio-tag ${idx===0?'primary':''}">${l}</span>`).join('');
+        const isTop=m.trending&&i<10;
+        return `<div class="movie-card fade-in" onclick="openDetails('${m.id}')" oncontextmenu="showCtxMenu(event,'${m.id}')" ontouchstart="startLongPress('${m.id}')" ontouchend="clearLongPress()" ontouchmove="clearLongPress()">
+            <div class="poster-box">
+                ${isTop?`<div style="position:absolute;bottom:0;left:0;font-size:48px;font-weight:900;color:rgba(255,255,255,0.12);line-height:1;z-index:2;pointer-events:none;">${i+1}</div>`:''}
+                <div class="badge-container">
+                    ${m.isVIP?'<div class="vip-badge">👑 VIP</div>':''}
+                    ${m.isNew?'<div class="new-badge">NEW</div>':''}
+                    <div class="q-badge">${m.qualityTag||'HD'}</div>
+                </div>
+                <img src="${m.poster}" loading="lazy" alt="${m.title}" onerror="this.src='https://via.placeholder.com/300x450/111827/e50914?text=M5U'">
+                <div class="heart-btn ${userWatchlist.includes(m.id)?'active':''}" onclick="event.stopPropagation();toggleWatchlistItem('${m.id}')"><i class="fa fa-heart"></i></div>
+                ${userHistory.find(h=>h.movieId===m.id)?`<div class="progress-bar" style="width:${userHistory.find(h=>h.movieId===m.id).progress||30}%;"></div>`:''}
+            </div>
+            <div class="movie-info">
+                <h4 class="movie-title">${m.title}</h4>
+                <div class="movie-meta"><span class="movie-year">${m.year||'2024'}</span><span class="movie-rating"><i class="fa fa-star" style="font-size:8px;"></i> ${m.rating||'4.5'}</span></div>
+                <div class="audio-languages">${tagsHtml}</div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ===== LONG PRESS =====
+let longPressTimer;
+window.startLongPress=(id)=>{ longPressTimer=setTimeout(()=>{ ctxMovieId=id; const menu=document.getElementById('ctxMenu'); menu.style.display='block'; menu.style.left='50%'; menu.style.top='50%'; menu.style.transform='translate(-50%,-50%)'; },600); };
+window.clearLongPress=()=>clearTimeout(longPressTimer);
+window.showCtxMenu=(e,id)=>{ e.preventDefault(); ctxMovieId=id; const menu=document.getElementById('ctxMenu'); menu.style.display='block'; menu.style.left=Math.min(e.clientX,window.innerWidth-200)+'px'; menu.style.top=Math.min(e.clientY,window.innerHeight-250)+'px'; menu.style.transform='none'; };
+document.addEventListener('click',()=>document.getElementById('ctxMenu').style.display='none');
+window.ctxAction=async(action)=>{
+    document.getElementById('ctxMenu').style.display='none'; if(!ctxMovieId) return;
+    if(action==='open') openDetails(ctxMovieId);
+    else if(action==='wishlist') toggleWatchlistItem(ctxMovieId);
+    else if(action==='download') { currentMovie=master.find(x=>x.id===ctxMovieId); addToDownloadQueue(); }
+    else if(action==='diary') { currentMovie=master.find(x=>x.id===ctxMovieId); addMovieToDiary(); }
+    else if(action==='share') { const m=master.find(x=>x.id===ctxMovieId); if(navigator.share) navigator.share({title:m?.title,text:`Watch ${m?.title} on Movies 5U!`,url:window.location.href}); else { navigator.clipboard.writeText(window.location.href); showToast('Link copied!'); } }
+    else if(action==='dedicate') { currentMovie=master.find(x=>x.id===ctxMovieId); openDedicateMovie(); }
+};
+
+// ===== HERO =====
+function renderHero() {
+    const items=master.filter(m=>m.slider).slice(0,5);
+    if(!items.length) { document.getElementById('heroBox').innerHTML='<div style="height:100%;background:linear-gradient(135deg,#0a0e27,#1a1a2e);display:flex;align-items:center;justify-content:center;"><p style="color:#444;font-size:13px;font-weight:800;">No featured content</p></div>'; return; }
+    let heroIdx=0;
+    const dots=items.map((_,i)=>`<div class="hero-dot ${i===0?'active':''}" id="hd-${i}" onclick="switchHero(${i})"></div>`).join('');
+    document.getElementById('heroBox').innerHTML=items.map((m,i)=>`
+        <div class="hero-slide ${i===0?'active':''}" id="s-${i}" onclick="openDetails('${m.id}')">
+            <img src="${m.poster}" alt="${m.title}" onerror="this.src='https://via.placeholder.com/800x450/0a0e27/e50914?text=Movies+5U'">
+            <div class="hero-overlay">
+                <p style="font-size:10px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;">${m.trending?'🔥 Trending':m.isNew?'✨ New Release':'🎬 Featured'}</p>
+                <h2 class="hero-title">${m.title}</h2>
+                <p class="hero-meta">${m.year||'2024'} • ${m.category||'Movie'} • ⭐ ${m.rating||'4.5'}</p>
+                <div class="hero-actions">
+                    <button class="hero-btn" onclick="event.stopPropagation();openDetails('${m.id}')"><i class="fa fa-play mr-2"></i>Watch</button>
+                    <button class="hero-btn-2" onclick="event.stopPropagation();toggleWatchlistItem('${m.id}')"><i class="fa fa-heart mr-1"></i>Wishlist</button>
+                </div>
+                <div class="hero-dots">${dots}</div>
+            </div>
+        </div>`).join('');
+    clearInterval(window._heroInterval);
+    window._heroInterval=setInterval(()=>{
+        heroIdx=(heroIdx+1)%items.length;
+        document.querySelectorAll('.hero-slide').forEach(s=>s.classList.remove('active'));
+        document.querySelectorAll('.hero-dot').forEach(d=>d.classList.remove('active'));
+        document.getElementById(`s-${heroIdx}`)?.classList.add('active');
+        document.getElementById(`hd-${heroIdx}`)?.classList.add('active');
+    },5000);
+}
+window.switchHero=(i)=>{
+    document.querySelectorAll('.hero-slide').forEach(s=>s.classList.remove('active'));
+    document.querySelectorAll('.hero-dot').forEach(d=>d.classList.remove('active'));
+    document.getElementById(`s-${i}`)?.classList.add('active');
+    document.getElementById(`hd-${i}`)?.classList.add('active');
+};
+
+// ===== TRENDING =====
+function renderTrending() {
+    const t=master.filter(m=>m.trending).slice(0,10); if(!t.length) return;
+    document.getElementById('trendingSection').classList.remove('hidden');
+    document.getElementById('trendingGrid').innerHTML=t.map((m,i)=>`
+        <div class="carousel-item" style="width:120px;" onclick="openDetails('${m.id}')">
+            <div style="position:relative;"><img src="${m.poster}" class="w-full rounded-xl" style="height:170px;object-fit:cover;object-position:center top;" onerror="this.src='https://via.placeholder.com/120x170'">
+            <div style="position:absolute;bottom:-4px;left:-4px;font-size:46px;font-weight:900;color:rgba(255,255,255,0.12);line-height:1;">${i+1}</div></div>
+            <p class="carousel-title" style="width:120px;">${m.title}</p>
+        </div>`).join('');
+}
+
+// ===== COMING SOON =====
+function renderComingSoon() {
+    const c=master.filter(m=>m.comingSoon).slice(0,10); if(!c.length) return;
+    document.getElementById('comingSoonSection').classList.remove('hidden');
+    document.getElementById('comingSoonGrid').innerHTML=c.map(m=>`
+        <div class="carousel-item relative" style="width:120px;" onclick="toggleComingSoonReminder()">
+            <img src="${m.poster}" class="w-full rounded-xl opacity-60" style="height:170px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/120x170'">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;">
+                <i class="fa fa-clock" style="font-size:28px;color:white;opacity:0.7;margin-bottom:4px;"></i>
+                <p style="font-size:9px;font-weight:800;color:white;">${m.releaseDate||'TBA'}</p>
+            </div>
+            <p class="carousel-title" style="width:120px;">${m.title}</p>
+        </div>`).join('');
+}
+
+// ===== CATEGORIES =====
+function renderCategories() {
+    const cats=[
+        {n:'All',i:'fa-th-large',c:'icon-all'},{n:'Bollywood',i:'fa-film',c:'icon-bollywood'},{n:'Hollywood',i:'fa-video',c:'icon-hollywood'},
+        {n:'South',i:'fa-language',c:'icon-south'},{n:'Action',i:'fa-fire',c:'icon-action'},{n:'Comedy',i:'fa-laugh-beam',c:'icon-comedy'},
+        {n:'Horror',i:'fa-ghost',c:'icon-horror'},{n:'Sci-Fi',i:'fa-rocket',c:'icon-scifi'},{n:'Web Series',i:'fa-tv',c:'icon-webseries'},
+        {n:'18+',i:'fa-fire',c:'icon-18plus'},{n:'Netflix',i:'fa-play-circle',c:'icon-netflix'},{n:'Prime',i:'fa-amazon',c:'icon-prime'},
+        {n:'Hotstar',i:'fa-star',c:'icon-hotstar'},{n:'JioCinema',i:'fa-circle-play',c:'icon-jio'},{n:'Sony LIV',i:'fa-square',c:'icon-sony'},{n:'Zee5',i:'fa-play',c:'icon-zee5'},
+    ];
+    document.getElementById('categoriesGrid').innerHTML=cats.map((c,i)=>`
+        <div class="category-btn ${i===0?'active':''}" onclick="filterByCategory('${c.n}',this)">
+            <div class="cat-icon ${c.c}"><i class="fa ${c.i}"></i></div>
+            <span class="cat-label">${c.n}</span>
+        </div>`).join('');
+}
+
+// ===== FOR YOU =====
+function renderForYou() {
+    if(userHistory.length<2) return;
+    const catCount={};
+    userHistory.forEach(h=>{ const m=master.find(x=>x.id===h.movieId); if(m){const g=m.category||m.genre||''; catCount[g]=(catCount[g]||0)+1;} });
+    const topCat=Object.entries(catCount).sort((a,b)=>b[1]-a[1])[0]?.[0]; if(!topCat) return;
+    const recs=master.filter(m=>(m.category===topCat||m.genre===topCat)&&!userHistory.find(h=>h.movieId===m.id)).slice(0,6);
+    if(recs.length>0) { document.getElementById('forYouSection').classList.remove('hidden'); renderGrid(recs,'forYouGrid'); }
+}
+
+// ===== ON THIS DAY =====
+function renderOnThisDay() {
+    if(!userHistory.length) return;
+    const oneYearAgo=Date.now()-(365*24*60*60*1000);
+    const oldEntry=userHistory.find(h=>{const t=h.timestamp; return t&&Math.abs(t-oneYearAgo)<(7*24*60*60*1000);});
+    if(oldEntry) {
+        const m=master.find(x=>x.id===oldEntry.movieId);
+        if(m) { document.getElementById('onThisDaySection').classList.remove('hidden'); document.getElementById('onThisDayText').innerText=`Aaj ke din 1 saal pehle aapne "${m.title}" dekhi thi! 🎬`; }
+    }
+}
+
+// ===== TICKER =====
+function updateTickerFromMovies() {
+    const newMovies=master.filter(m=>m.isNew).slice(0,5); if(!newMovies.length) return;
+    const items=newMovies.map(m=>`<span class="ticker-item">🎬 NEW: ${m.title}!</span>`).join('');
+    document.getElementById('tickerContent').innerHTML=items+items;
+}
+
+// ===== SEARCH =====
+window.doSearch=(v)=>{
+    const rec=document.getElementById('searchRecommend');
+    const genre=document.getElementById('searchGenre').value;
+    const lang=document.getElementById('searchLang').value;
+    if(!v.trim()&&!genre&&!lang) { document.getElementById('searchGrid').innerHTML=''; rec.style.display='block'; return; }
+    rec.style.display='none';
+    let f=[...master];
+    if(v.trim()) f=f.filter(m=>m.title.toLowerCase().includes(v.toLowerCase())||(m.description||'').toLowerCase().includes(v.toLowerCase()));
+    if(v.toLowerCase()==='midnight') f=master.filter(m=>m.isNew||m.trending);
+    if(genre) f=f.filter(m=>(m.genre||m.category||'').toLowerCase().includes(genre.toLowerCase()));
+    if(lang) f=f.filter(m=>{ const al=Array.isArray(m.audioLang)?m.audioLang:[m.audioLang||'Hindi']; return al.some(l=>l.toLowerCase().includes(lang.toLowerCase())); });
+    renderGrid(f,'searchGrid');
+};
+window.showSuggestions=(v)=>{
+    const box=document.getElementById('searchSuggestions'); if(!v||v.length<2) { box.style.display='none'; return; }
+    const hits=master.filter(m=>m.title.toLowerCase().startsWith(v.toLowerCase())).slice(0,6);
+    if(!hits.length) { box.style.display='none'; return; }
+    box.innerHTML=hits.map(m=>`<div class="suggestion-item" onclick="quickSearch('${m.title}')"><i class="fa fa-search" style="color:#666;font-size:10px;"></i>${m.title}</div>`).join('');
+    box.style.display='block';
+};
+window.hideSuggestions=()=>document.getElementById('searchSuggestions').style.display='none';
+window.quickSearch=(t)=>{ document.getElementById('sInp').value=t; doSearch(t); hideSuggestions(); };
+window.startVoiceSearch=()=>{
+    if('webkitSpeechRecognition' in window) {
+        const r=new webkitSpeechRecognition(); r.lang=currentLang==='hi'?'hi-IN':'en-US'; r.start();
+        r.onstart=()=>document.getElementById('sInp').placeholder='🎤 Bol raha hoon...';
+        r.onresult=e=>{ const t=e.results[0][0].transcript; document.getElementById('sInp').value=t; doSearch(t); };
+        r.onerror=()=>{ document.getElementById('sInp').placeholder='Search movies...'; showToast('Voice search failed'); };
+    } else alert('Voice search not supported');
+};
+
+// ===== FILTERS =====
+window.moodFilter=(mood,btn)=>{ document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); if(mood==='All'){renderGrid(master,'mainGrid');return;} const f=master.filter(m=>(m.genre||m.category||'').toLowerCase().includes(mood.toLowerCase())); renderGrid(f,'mainGrid'); };
+window.langFilter=(lang,btn)=>{ document.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); if(lang==='All'){renderGrid(master,'mainGrid');return;} const f=master.filter(m=>{ const al=Array.isArray(m.audioLang)?m.audioLang:[m.audioLang||'Hindi']; return al.some(l=>l.toLowerCase().includes(lang.toLowerCase())); }); renderGrid(f,'mainGrid'); };
+window.filterByCategory=(cat,btn)=>{ document.querySelectorAll('.category-btn').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); if(cat==='All'){renderGrid(master,'mainGrid');return;} const f=master.filter(m=>{ if(cat==='18+') return m.category18plus; return m.category===cat||m.genre===cat; }); renderGrid(f,'mainGrid'); };
+window.applyFilters=()=>{ const yr=document.getElementById('yearFilter').value, s=document.getElementById('sortFilter').value; let f=[...master]; if(yr!=='all') f=f.filter(m=>m.year==yr); if(s==='newest') f.sort((a,b)=>b.time-a.time); else if(s==='popular') f.sort((a,b)=>(b.views||0)-(a.views||0)); else if(s==='az') f.sort((a,b)=>a.title.localeCompare(b.title)); renderGrid(f,'mainGrid'); };
+window.openEmotionMatcher=()=>openModal('emotionModal');
+window.emotionFilter=(emotion)=>{
+    closeModal('emotionModal');
+    const map={Happy:'Comedy',Sad:'Drama',Excited:'Action',Bored:'Thriller',Scared:'Horror',Romantic:'Romance'};
+    const cat=map[emotion]||emotion;
+    const f=master.filter(m=>(m.genre||m.category||'').toLowerCase().includes(cat.toLowerCase()));
+    showToast(`Showing ${emotion} movies 🎬`); goHome();
+    setTimeout(()=>renderGrid(f.length?f:master,'mainGrid'),300);
+};
+
+// ===== WATCHLIST =====
+window.toggleWatchlistItem=async(movieId)=>{
+    try {
+        const uRef=doc(db,"users",userId);
+        if(userWatchlist.includes(movieId)) {
+            await updateDoc(uRef,{watchlist:arrayRemove(movieId)}); userWatchlist=userWatchlist.filter(id=>id!==movieId); showToast('Removed from Wishlist');
+        } else {
+            await updateDoc(uRef,{watchlist:arrayUnion(movieId)}); userWatchlist.push(movieId); userPoints+=5; await updateDoc(uRef,{points:userPoints}); showToast('Added to Wishlist ❤️ +5pts');
+        }
+        renderGrid(master,'mainGrid'); loadWatchlistSection(); updateProfileDisplay();
+    } catch(e){ showToast('Error updating wishlist'); }
+};
+window.toggleWatchlist=async()=>{ if(currentMovie) await toggleWatchlistItem(currentMovie.id); };
+
+function loadWatchlistSection() {
+    if(userWatchlist.length>0) {
+        document.getElementById('watchlistSection').classList.remove('hidden');
+        const wm=master.filter(m=>userWatchlist.includes(m.id));
+        document.getElementById('watchlistGrid').innerHTML=wm.map(m=>`
+            <div class="carousel-item" style="width:90px;" onclick="openDetails('${m.id}')">
+                <img src="${m.poster}" style="width:90px;height:130px;object-fit:cover;object-position:center top;border-radius:10px;" onerror="this.src='https://via.placeholder.com/90x130'">
+                <p style="font-size:8px;font-weight:800;text-align:center;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:90px;">${m.title}</p>
+            </div>`).join('');
+    }
+}
+window.openWishlistPage=()=>{
+    const wm=master.filter(m=>userWatchlist.includes(m.id));
+    renderGrid(wm,'wishlistFullGrid'); openPage('wishlistPage');
+};
+
+// ===== CONTINUE WATCHING =====
+async function loadContinueWatching() {
+    try {
+        const snap=await getDoc(doc(db,"users",userId)); if(!snap.exists()) return;
+        const hist=snap.data().history||[];
+        const cont=hist.filter(h=>h.progress<90).slice(0,10);
+        if(cont.length>0) {
+            document.getElementById('continueSection').classList.remove('hidden');
+            document.getElementById('continueGrid').innerHTML=cont.map(h=>{
+                const m=master.find(x=>x.id===h.movieId); if(!m) return '';
+                return `<div class="carousel-item relative" style="width:120px;" onclick="openDetails('${m.id}')"><img src="${m.poster}" style="width:120px;height:170px;object-fit:cover;object-position:center top;border-radius:10px;" onerror="this.src='https://via.placeholder.com/120x170'"><div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:#333;border-radius:0 0 10px 10px;overflow:hidden;"><div style="width:${h.progress||30}%;height:100%;background:var(--primary);"></div></div><p class="carousel-title" style="width:120px;">${m.title}</p></div>`;
+            }).join('');
+        }
+    } catch(e){}
+}
+
+// ===== NAVIGATION =====
+window.showPage=(id)=>{ document.querySelectorAll('.page-view').forEach(p=>p.classList.remove('active')); document.getElementById(id).classList.add('active'); currentPage=id; };
+window.closePage=(id)=>{ document.getElementById(id).classList.remove('active'); goHome(); };
+window.goHome=()=>{ document.querySelectorAll('.page-view').forEach(p=>p.classList.remove('active')); document.getElementById('page-home').classList.add('active'); document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active')); document.getElementById('nav-home').classList.add('active'); currentPage='home'; };
+window.openPage=(id)=>{
+    showPage(id);
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    if(id==='searchPage') document.getElementById('nav-search').classList.add('active');
+    if(id==='profilePage') document.getElementById('nav-profile').classList.add('active');
+    if(id==='wishlistPage') { document.getElementById('nav-wishlist').classList.add('active'); openWishlistPage(); }
+    if(id==='settingsPage') loadSettings();
+};
+
+// ===== MOVIE DETAILS =====
+window.openDetails=async(id)=>{
+    const m=master.find(x=>x.id===id); if(!m) return;
+    currentMovie=m;
+    document.getElementById('mTitle').innerText=m.title;
+    document.getElementById('mPost').src=m.poster;
+    document.getElementById('mDesc').innerText=m.description||'No description available.';
+    document.getElementById('mYearLabel').innerText=m.year||'2024';
+    document.getElementById('mQualLabel').innerText=m.qualityTag||'HD';
+    document.getElementById('mAudioLabel').innerText=Array.isArray(m.audioLang)?m.audioLang.join(', '):(m.audioLang||'Hindi');
+    document.getElementById('mGenreLabel').innerText=m.genre||m.category||'';
+    document.getElementById('avgRating').innerText=m.rating||'4.5';
+    document.getElementById('ratingCount').innerText=m.ratingCount||'0';
+    document.getElementById('mViews').innerText=(m.views||0).toLocaleString();
+    const wb=document.getElementById('wishlistBtn'); wb.style.background=userWatchlist.includes(m.id)?'rgba(229,9,20,0.8)':'';
+    const ts=document.getElementById('trailerSection'); if(m.trailer){ts.classList.remove('hidden');window._trailerUrl=m.trailer;}else ts.classList.add('hidden');
+
+    const mb=document.getElementById('movieBox'), sb=document.getElementById('seriesBox');
+    mb.innerHTML=''; sb.innerHTML='';
+    if(m.type==='Movie'&&m.links) {
+        sb.classList.add('hidden'); mb.classList.remove('hidden');
+        [{key:'q480',lbl:'480p',c:'q-480'},{key:'q720hevc',lbl:'720p HEVC',c:'q-720h'},{key:'q720',lbl:'720p',c:'q-720'},{key:'q1080hevc',lbl:'1080p HEVC',c:'q-1080h'},{key:'q1080',lbl:'1080p',c:'q-1080'},{key:'q4k',lbl:'4K',c:'q-4k'}].forEach(q=>{ if(m.links[q.key]) mb.innerHTML+=`<button onclick="playVideo('${m.links[q.key]}','${m.title}')" class="play-btn ${q.c}"><i class="fa fa-play mr-1" style="font-size:9px;"></i>${q.lbl}</button>`; });
+    } else if(m.episodes&&m.episodes.length>0) {
+        mb.classList.add('hidden'); sb.classList.remove('hidden');
+        sb.innerHTML=m.episodes.map((ep,i)=>{
+            const qs=[{keys:['l4','q480'],lbl:'480p',c:'q-480'},{keys:['l7hevc','q720hevc'],lbl:'720p HEVC',c:'q-720h'},{keys:['l7','q720'],lbl:'720p',c:'q-720'},{keys:['l1hevc','q1080hevc'],lbl:'1080p HEVC',c:'q-1080h'},{keys:['l1','q1080'],lbl:'1080p',c:'q-1080'},{keys:['l4k','q4k'],lbl:'4K',c:'q-4k'}];
+            let btns=''; qs.forEach(q=>{ const link=q.keys.map(k=>ep[k]).find(l=>l&&l.trim()!==''); if(link) btns+=`<button onclick="playVideo('${link}','${ep.name||'Ep '+(i+1)}')" class="play-btn ${q.c}"><i class="fa fa-play mr-1" style="font-size:9px;"></i>${q.lbl}</button>`; });
+            return `<div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:12px;"><p style="font-weight:900;text-transform:uppercase;font-size:11px;margin-bottom:8px;">${ep.name||'Episode '+(i+1)}</p><div class="grid grid-cols-2 gap-2">${btns}</div></div>`;
+        }).join('');
+    }
+
+    const cat=m.category||m.genre||'';
+    const related=master.filter(x=>x.id!==m.id&&(x.category===cat||x.genre===cat)).slice(0,12);
+    document.getElementById('relatedGrid').innerHTML=related.map(r=>`<div class="related-item" onclick="openDetails('${r.id}')"><img src="${r.poster}" onerror="this.src='https://via.placeholder.com/90x135'"><p>${r.title}</p></div>`).join('');
+    loadComments(id);
+    document.getElementById('miniThumb').src=m.poster;
+    document.getElementById('miniTitle').innerText=m.title;
+    showPage('streamM');
+
+    if(!ghostMode) {
+        try {
+            const uRef=doc(db,"users",userId);
+            await updateDoc(uRef,{history:arrayUnion({movieId:id,timestamp:Date.now(),progress:0})});
+            await updateDoc(doc(db,"movies_pro",id),{views:increment(1)});
+            if(!userHistory.find(h=>h.movieId===id)) userHistory.push({movieId:id,progress:0});
+            updateProfileDisplay();
+        } catch(e){}
+    }
+};
+
+// ===== TRAILER =====
+window.playTrailer=()=>{
+    let url=window._trailerUrl; if(!url) return;
+    if(url.includes('youtube.com/watch?v=')) url=url.replace('watch?v=','embed/');
+    else if(url.includes('youtu.be/')) url='https://www.youtube.com/embed/'+url.split('youtu.be/')[1];
+    document.getElementById('trailerFrame').innerHTML=`<iframe src="${url}" class="w-full" style="border:none;width:100%;aspect-ratio:16/9;" allowfullscreen></iframe>`;
+    document.getElementById('trailerTitle').innerText=(currentMovie?.title||'')+' — Trailer';
+    openModal('trailerModal');
+};
+
+// ===== PLAY VIDEO =====
+window.playVideo=(url,title)=>{ document.getElementById('miniPlayer').classList.add('show'); window._lastPlayUrl=url; window.open(url,'_blank'); };
+window.closeMiniPlayer=()=>document.getElementById('miniPlayer').classList.remove('show');
+window.resumeFromMini=()=>{ if(window._lastPlayUrl) window.open(window._lastPlayUrl,'_blank'); };
+
+// ===== COMMENTS =====
+async function loadComments(movieId) {
+    document.getElementById('commentsList').innerHTML='<p style="font-size:11px;color:#555;text-align:center;padding:12px;">Loading...</p>';
+    try {
+        const snap=await getDocs(collection(db,"movies_pro",movieId,"comments"));
+        const comments=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.time-a.time).slice(0,20);
+        if(!comments.length) { document.getElementById('commentsList').innerHTML='<p style="font-size:11px;color:#555;text-align:center;padding:12px;">No reviews yet. Be the first!</p>'; return; }
+        document.getElementById('commentsList').innerHTML=comments.map(c=>`<div class="comment-item"><p class="comment-author">${c.userName||'Anonymous'} ${'★'.repeat(c.rating||0)}</p><p class="comment-text">${c.text}</p><p class="comment-time">${new Date(c.time).toLocaleDateString()}</p></div>`).join('');
+    } catch(e){ document.getElementById('commentsList').innerHTML=''; }
+}
+window.submitComment=async()=>{
+    const txt=document.getElementById('commentInput').value.trim();
+    if(!txt||!currentMovie) return;
+    try {
+        await addDoc(collection(db,"movies_pro",currentMovie.id,"comments"),{userId,userName:'USER_'+userId.slice(-5),text:txt,time:Date.now(),rating:0});
+        document.getElementById('commentInput').value='';
+        userPoints+=10; await updateDoc(doc(db,"users",userId),{points:userPoints});
+        showToast('Review posted! +10pts ⭐'); loadComments(currentMovie.id); updateProfileDisplay();
+    } catch(e){ showToast('Error posting comment'); }
+};
+
+// ===== RATING =====
+window.rateMovie=async(r)=>{
+    if(!currentMovie) return;
+    document.querySelectorAll('.star-btn').forEach((b,i)=>{ b.style.opacity=i<r?'1':'0.3'; b.style.color=i<r?'#ffc107':''; });
+    try { const uRef=doc(db,"users",userId); const rd={}; rd[`ratings.${currentMovie.id}`]=r; await updateDoc(uRef,rd); userPoints+=10; await updateDoc(uRef,{points:userPoints}); showToast(`Rated ${r}★ +10pts`); updateProfileDisplay(); } catch(e){}
+};
+
+// ===== DOWNLOADS =====
+window.addToDownloadQueue=()=>{
+    if(!currentMovie) return;
+    if(downloadQueue.find(d=>d.id===currentMovie.id)) { showToast('Already in queue!'); return; }
+    downloadQueue.push({id:currentMovie.id,title:currentMovie.title,poster:currentMovie.poster,added:Date.now(),progress:Math.floor(Math.random()*60)+20});
+    localStorage.setItem('m5u_downloads',JSON.stringify(downloadQueue));
+    showToast('Added to Download Queue 📥');
+};
+
+// ===== MOVIE REQUEST =====
+window.openMovieRequest=()=>{ openModal('requestModal'); document.getElementById('nav-request').classList.add('active'); setTimeout(()=>document.getElementById('nav-request').classList.remove('active'),300); };
+window.submitRequest=async()=>{
+    const name=document.getElementById('reqMovieName').value.trim();
+    if(!name) { showToast('Movie ka naam dalo!'); return; }
+    try {
+        await addDoc(collection(db,"movie_requests"),{userId,movieName:name,year:document.getElementById('reqYear').value,language:document.getElementById('reqLang').value,note:document.getElementById('reqNote').value,time:Date.now(),status:'pending'});
+        userPoints+=15; await updateDoc(doc(db,"users",userId),{points:userPoints});
+        showToast('Request submitted! +15pts 📝'); document.getElementById('reqMovieName').value=''; document.getElementById('reqYear').value=''; document.getElementById('reqNote').value=''; closeModal('requestModal'); updateProfileDisplay();
+    } catch(e){ showToast('Request bhej diya! 📝'); closeModal('requestModal'); }
+};
+
+// ===== MOVIE DIARY =====
+window.addMovieToDiary=()=>{
+    if(!currentMovie) return;
+    document.getElementById('diaryMovieTitle').innerText=currentMovie.title;
+    document.getElementById('diaryNote').value=''; selectedDiaryMood='😊';
+    openModal('diaryAddModal');
+};
+window.selectDiaryMood=(mood,btn)=>{ selectedDiaryMood=mood; document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); };
+window.saveDiaryEntry=()=>{
+    if(!currentMovie) return;
+    const entries=JSON.parse(localStorage.getItem('m5u_diary')||'[]');
+    entries.unshift({movieId:currentMovie.id,title:currentMovie.title,poster:currentMovie.poster,mood:selectedDiaryMood,note:document.getElementById('diaryNote').value,date:new Date().toLocaleDateString(),timestamp:Date.now()});
+    localStorage.setItem('m5u_diary',JSON.stringify(entries));
+    closeModal('diaryAddModal'); showToast('Diary mein save! 📖 +5pts');
+    userPoints+=5; updateProfileDisplay();
+};
+
+// ===== DEDICATE MOVIE =====
+window.openDedicateMovie=()=>{ if(!currentMovie) return; document.getElementById('dedicateTo').value=''; document.getElementById('dedicateMsg').value=''; openModal('dedicateModal'); };
+window.sendDedication=()=>{
+    const to=document.getElementById('dedicateTo').value.trim(); if(!to) { showToast('Kisi ka naam dalo!'); return; }
+    const msg=`🎬 "${currentMovie?.title}" — ${document.getElementById('dedicateMsg').value}`;
+    if(navigator.share) navigator.share({text:msg}); else { navigator.clipboard.writeText(msg); showToast('Copied! Share karo ❤️'); }
+    closeModal('dedicateModal'); userPoints+=5; updateProfileDisplay();
+};
+
+// ===== WORLD MAP =====
+const countries=[{f:'🇮🇳',n:'India',cat:'Bollywood'},{f:'🇺🇸',n:'USA',cat:'Hollywood'},{f:'🇬🇧',n:'UK',cat:'Hollywood'},{f:'🇯🇵',n:'Japan',cat:'Anime'},{f:'🇰🇷',n:'Korea',cat:'Drama'},{f:'🇫🇷',n:'France',cat:'Drama'},{f:'🇮🇹',n:'Italy',cat:'Drama'},{f:'🇪🇸',n:'Spain',cat:'Drama'}];
+window.openWorldMap=()=>{
+    const watched=new Set(userHistory.map(h=>{ const m=master.find(x=>x.id===h.movieId); return m?.category||m?.genre||''; }));
+    document.getElementById('worldMapGrid').innerHTML=countries.map(c=>{
+        const unlocked=watched.has(c.cat)||c.cat==='Bollywood'||c.cat==='Hollywood';
+        return `<div class="country-card ${unlocked?'unlocked':'locked'}" onclick="filterByCountry('${c.cat}')"><div class="country-flag">${c.f}</div><div class="country-name">${c.n}</div><div style="font-size:8px;margin-top:2px;color:#888;">${unlocked?'✅ Unlocked':'🔒 Locked'}</div></div>`;
+    }).join('');
+    openModal('worldMapModal');
+};
+window.filterByCountry=(cat)=>{ closeModal('worldMapModal'); const f=master.filter(m=>m.category===cat||m.genre===cat); goHome(); setTimeout(()=>{ renderGrid(f.length?f:master,'mainGrid'); showToast(`🗺️ ${cat} movies!`); },300); };
+
+// ===== YEARLY WRAPPED =====
+window.openYearlyWrapped=()=>{
+    const year=new Date().getFullYear();
+    const yearMovies=userHistory.length;
+    const genreCnt={};
+    userHistory.forEach(h=>{ const m=master.find(x=>x.id===h.movieId); if(m){const g=m.category||m.genre||'Other'; genreCnt[g]=(genreCnt[g]||0)+1;} });
+    const topGenre=Object.entries(genreCnt).sort((a,b)=>b[1]-a[1])[0];
+    document.getElementById('wrappedContent').innerHTML=`
+        <div style="background:linear-gradient(135deg,rgba(229,9,20,0.1),rgba(0,212,255,0.05));border-radius:16px;padding:20px;margin-bottom:12px;">
+            <p style="font-size:11px;color:#888;margin-bottom:8px;">Your ${year} in Movies</p>
+            <p style="font-size:48px;font-weight:900;color:var(--primary);">${yearMovies}</p>
+            <p style="font-size:13px;font-weight:800;">Movies & Series</p>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+            <div style="background:var(--card-bg);border-radius:12px;padding:12px;text-align:center;"><p style="font-size:20px;font-weight:900;color:var(--primary);">${Math.floor(yearMovies*1.8)}h</p><p style="font-size:9px;color:#888;font-weight:800;">Total Hours</p></div>
+            <div style="background:var(--card-bg);border-radius:12px;padding:12px;text-align:center;"><p style="font-size:20px;font-weight:900;color:var(--accent);">${userPoints}</p><p style="font-size:9px;color:#888;font-weight:800;">Points Earned</p></div>
+        </div>
+        ${topGenre?`<div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:12px;padding:14px;text-align:center;margin-bottom:12px;"><p style="font-size:11px;color:#ffd700;font-weight:900;text-transform:uppercase;margin-bottom:4px;">Favorite Genre</p><p style="font-size:22px;font-weight:900;">${topGenre[0]}</p><p style="font-size:11px;color:#888;">${topGenre[1]} movies</p></div>`:''}
+        <button onclick="shareWrapped()" style="width:100%;background:var(--primary);color:white;border:none;border-radius:12px;padding:12px;font-weight:900;font-size:12px;cursor:pointer;"><i class="fa fa-share mr-2"></i>Share My Wrapped!</button>`;
+    openModal('wrappedModal');
+};
+window.shareWrapped=()=>{ const msg=`🎬 My ${new Date().getFullYear()} Movie Year on Movies 5U!\n📽️ ${userHistory.length} Movies Watched\n⏱️ ${Math.floor(userHistory.length*1.8)} Hours\n💎 ${userPoints} Points\n\nJoin me on Movies 5U!`; if(navigator.share) navigator.share({text:msg}); else { navigator.clipboard.writeText(msg); showToast('Copied!'); } };
+
+// ===== CINEMA CARD =====
+window.openCinemaCard=()=>{
+    const m=currentMovie||master[0]; if(!m) { showToast('Pehle koi movie open karo!'); return; }
+    document.getElementById('cinemaCard').innerHTML=`
+        <div style="position:relative;z-index:2;">
+            <img src="${m.poster}" style="width:120px;height:180px;object-fit:cover;object-position:center top;border-radius:12px;margin:0 auto 12px;display:block;box-shadow:0 8px 25px rgba(0,0,0,0.5);" onerror="this.src='https://via.placeholder.com/120x180'">
+            <h3 style="font-size:16px;font-weight:900;text-transform:uppercase;margin-bottom:6px;">${m.title}</h3>
+            <p style="font-size:11px;color:#888;margin-bottom:8px;">${m.year||'2024'} • ⭐ ${m.rating||'4.5'}</p>
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;">
+                <div style="width:30px;height:3px;background:var(--primary);border-radius:2px;"></div>
+                <p style="font-size:11px;font-weight:900;color:var(--primary);">MOVIES 5U</p>
+                <div style="width:30px;height:3px;background:var(--primary);border-radius:2px;"></div>
+            </div>
+        </div>`;
+    openModal('cinemaCardModal');
+};
+window.shareCinemaCard=()=>{ const m=currentMovie||master[0]; if(!m) return; const txt=`🎬 I just watched "${m.title}" on Movies 5U!\n⭐ Rating: ${m.rating||'4.5'}/5\n\nJoin me on Movies 5U!`; if(navigator.share) navigator.share({text:txt}); else { navigator.clipboard.writeText(txt); showToast('Copied!'); } };
+
+// ===== CHAI BREAK =====
+window.openChaiBreak=()=>openModal('chaiModal');
+window.startChaiTimer=(mins)=>{
+    clearInterval(chaiInterval); let secs=mins*60;
+    chaiInterval=setInterval(()=>{ secs--; const m=Math.floor(secs/60), s=secs%60; document.getElementById('chaiTimer').innerText=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; if(secs<=0) { clearInterval(chaiInterval); document.getElementById('chaiTimer').innerText='☕ DONE!'; showToast('Chai ready! Back to movies! 🎬'); } },1000);
+};
+window.stopChaiTimer=()=>{ clearInterval(chaiInterval); document.getElementById('chaiTimer').innerText='15:00'; };
+
+// ===== VIP =====
+window.openVIPPage=()=>openPage('vipPage');
+window.buyVIP=(plan)=>{ showToast(`👑 VIP ${plan} — Contact @movies5u_app on Telegram!`); };
+
+// ===== HOW TO WATCH =====
+window.openHowToWatch=()=>{
+    window.open('https://drive.google.com/file/d/1XHWl23bIUhEzI3gjLJpRRLMFcZmgVGIE/view?usp=drivesdk', '_blank');
+};
+
+// ===== PLAYERJET =====
+window.downloadPlayerjet=()=>{ 
+    window.open('https://play.google.com/store/apps/details?id=com.rs.playerjet', '_blank');
+};
+
+// ===== REPORT / REMIND =====
+window.reportBrokenLink=async()=>{
+    if(!currentMovie) return;
+    try { await addDoc(collection(db,"reports"),{userId,movieId:currentMovie.id,time:Date.now()}); showToast('Reported! Fix hoga jald ✅'); }
+    catch(e){ showToast('Report bheja gaya! ✅'); }
+};
+window.toggleComingSoonReminder=()=>{ if(!currentMovie) return; showToast('🔔 Reminder set! Jab aayegi — batayenge!'); };
+window.shareMovie=()=>{ if(!currentMovie) return; const txt=`Watch "${currentMovie.title}" on Movies 5U!\n\nDownload app: t.me/Movies5u_app`; if(navigator.share) navigator.share({text:txt}); else { navigator.clipboard.writeText(txt); showToast('Link copied!'); } };
+
+// ===== KIDS MODE =====
+window.setKidsPin=()=>{ pinMode='set'; pinBuffer=[]; showPinModal('Naya 4-digit Kids PIN set karo'); };
+function showPinModal(desc) {
+    document.getElementById('pinModalDesc').innerText=desc; [0,1,2,3].forEach(i=>{ const p=document.getElementById('pd'+i); p.innerText='•'; p.style.background=''; });
+    const kp=document.getElementById('pinKeypad'); kp.innerHTML='';
+    for(let i=1;i<=9;i++) kp.innerHTML+=`<button onclick="pinPress(${i})" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:12px;padding:12px;font-weight:900;font-size:18px;cursor:pointer;color:var(--text);">${i}</button>`;
+    kp.innerHTML+=`<button onclick="pinPress('del')" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:12px;padding:12px;font-weight:900;font-size:14px;cursor:pointer;color:var(--text);">⌫</button>`;
+    kp.innerHTML+=`<button onclick="pinPress(0)" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:12px;padding:12px;font-weight:900;font-size:18px;cursor:pointer;color:var(--text);">0</button>`;
+    kp.innerHTML+=`<button onclick="pinPress('ok')" style="background:var(--primary);border:none;border-radius:12px;padding:12px;font-weight:900;font-size:14px;cursor:pointer;color:white;">OK</button>`;
+    openModal('kidsPinModal');
+}
+window.pinPress=(val)=>{
+    if(val==='del') pinBuffer.pop();
+    else if(val==='ok') { if(pinBuffer.length===4) { const pin=pinBuffer.join(''); if(pinMode==='set'){localStorage.setItem('m5u_kidspin',pin);closeModal('kidsPinModal');showToast('PIN set! ✅');}else{if(pin===localStorage.getItem('m5u_kidspin')){kidsMode=true;localStorage.setItem('m5u_kids','true');closeModal('kidsPinModal');document.getElementById('kidsModeToggle').classList.add('on');showToast('Kids Mode: ON 👶');}else{showToast('Wrong PIN! ❌');pinBuffer=[];}} } return; }
+    else if(pinBuffer.length<4) pinBuffer.push(val);
+    [0,1,2,3].forEach(i=>{ const p=document.getElementById('pd'+i); if(pinBuffer[i]!==undefined){p.innerText='★';p.style.background='rgba(229,9,20,0.2)';}else{p.innerText='•';p.style.background='';} });
+};
+
+// ===== PWA =====
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); pwaInstallEvent=e; setTimeout(()=>document.getElementById('pwaPrompt').style.display='flex',8000); });
+window.installPWA=async()=>{ if(pwaInstallEvent){pwaInstallEvent.prompt();const r=await pwaInstallEvent.userChoice;if(r.outcome==='accepted')showToast('App installed! 📱');}else showToast('Browser menu se install karo'); document.getElementById('pwaPrompt').style.display='none'; };
+
+// ===== CONFETTI =====
+window.launchConfetti=()=>{
+    const colors=['#e50914','#ffd700','#00d4ff','#00ff88','#ff6b6b','#8e2de2'];
+    for(let i=0;i<40;i++){
+        const c=document.createElement('div'); c.className='confetti-piece';
+        c.style.left=Math.random()*100+'vw'; c.style.background=colors[Math.floor(Math.random()*colors.length)];
+        c.style.width=c.style.height=(6+Math.random()*10)+'px'; c.style.borderRadius=Math.random()>0.5?'50%':'2px';
+        c.style.animationDuration=(2+Math.random()*2)+'s'; c.style.animationDelay=(Math.random()*0.5)+'s';
+        document.getElementById('confettiContainer').appendChild(c); setTimeout(()=>c.remove(),4000);
+    }
+};
+
+// ===== TOAST =====
+window.showToast=(msg)=>{
+    const t=document.getElementById('toast'); t.innerText=msg; t.style.display='block'; t.style.opacity='1';
+    clearTimeout(window._tt); window._tt=setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.style.display='none',300); },2500);
+};
+
+// ===== FIRST TIME ONBOARDING =====
+function checkFirstTimeUser() {
+    if(localStorage.getItem('m5u_onboarded')) return;
+    setTimeout(()=>{
+        const genres=[{e:'🔥',n:'Action'},{e:'😂',n:'Comedy'},{e:'💀',n:'Horror'},{e:'❤️',n:'Romance'},{e:'🚀',n:'Sci-Fi'},{e:'🎭',n:'Drama'},{e:'🌿',n:'Family'},{e:'🕵️',n:'Thriller'},{e:'🇮🇳',n:'Bollywood'}];
+        const ob=document.getElementById('onboarding');
+        ob.innerHTML=`<div style="padding:50px 20px 20px;text-align:center;"><div style="font-size:50px;margin-bottom:10px;">🎬</div><h2 style="font-size:24px;font-weight:900;color:var(--primary);margin-bottom:6px;">Welcome to Movies 5U!</h2><p style="color:#888;font-size:13px;margin-bottom:24px;">Pehle apni pasandida genres select karo</p><div class="ob-genre-grid" id="obGrid">${genres.map(g=>`<div class="ob-genre-card" onclick="this.classList.toggle('selected')"><div class="ob-genre-icon">${g.e}</div><div class="ob-genre-name">${g.n}</div></div>`).join('')}</div><button onclick="completeOnboarding()" style="margin-top:24px;background:var(--primary);color:white;border:none;border-radius:14px;padding:14px 40px;font-weight:900;font-size:14px;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 20px rgba(229,9,20,0.4);">Let's Go! 🎬</button></div>`;
+        ob.classList.add('show');
+    },1000);
+}
+window.completeOnboarding=()=>{
+    const selected=[...document.querySelectorAll('.ob-genre-card.selected')].map(el=>el.querySelector('.ob-genre-name').innerText);
+    localStorage.setItem('m5u_interests',JSON.stringify(selected)); localStorage.setItem('m5u_onboarded','1');
+    document.getElementById('onboarding').classList.remove('show'); showToast('Welcome to Movies 5U! 🎬'); launchConfetti();
+};
+
+// ===== BACK BUTTON =====
+window.onpopstate=()=>{ if(currentPage!=='home') goHome(); };
+history.pushState(null,null,window.location.pathname);
+
+// ===== FORCE SPLASH HIDE =====
+setTimeout(()=>{
+    const splash=document.getElementById('splash');
+    if(splash&&splash.style.display!=='none') { splash.style.display='none'; showToast('⚠️ Slow connection. Try refreshing.'); }
+},5000);
+
+// ===== RUN =====
+initUser().then(()=>loadMovies()).catch(()=>{
+    document.getElementById('splash').style.display='none';
+    showToast('⚠️ Failed to initialize. Refresh karo.');
+});
+</script>
+
+<!-- ONBOARDING -->
+<div id="onboarding"></div>
+</body>
+</html>
